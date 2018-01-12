@@ -24,8 +24,6 @@
   padding: .1rem .15rem;
   background-color: #fff;
   border-bottom: 1px solid #ddd;
-  position: relative;
-  z-index: 20;
   &:last-child {
     border: none;
   }
