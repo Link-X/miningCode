@@ -82,3 +82,45 @@ export const logout = () => {
   localStorage.clear()
   window.location.reload()
 }
+
+export const hassClass = (el, className) => {
+  let reg = new RegExp('(^|\\s)' + className + '(\\s|$)')
+  return reg.test(el.className)
+}
+
+export const addClass = (el, className) => {
+  if (hassClass(el, className)) {
+    return
+  }
+  let newClass = el.className.split(' ')
+  newClass.push(className)
+  el.className = newClass.join(' ')
+}
+
+export const remClass = (el, className) => {
+  if (!hassClass(el, className)) {
+    return
+  }
+  let rmCl = el.className.split(' ')
+  rmCl.splice(rmCl.indexOf(className), 1)
+  el.className = rmCl.join(' ')
+}
+
+export const touchDoms = (dom, name) => {
+  if (typeof dom !== 'object') {
+    return
+  }
+  let liDom = null
+  dom.path.forEach(val => {
+    if (val.nodeName === 'LI') {
+      liDom = val
+    }
+  })
+  if (liDom) {
+    if (name === 'add') {
+      addClass(liDom, 'home-li_click')
+    } else {
+      remClass(liDom, 'home-li_click')
+    }
+  }
+}

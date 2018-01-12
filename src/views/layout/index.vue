@@ -20,8 +20,8 @@
 
 .errorC {
   position: absolute;
-  top: -13px;
-  right: -13px;
+  top: -35px;
+  right: -2px;
 }
 </style>
 <template>
@@ -33,7 +33,14 @@
     </mt-header>
     <router-view></router-view>
     <mt-tabbar :fixed='true' v-model="selected" class="layout-bar">
-      <mt-tab-item v-for="(item, index) in data" :key="index" :id='item.router' @click.native="goClick">
+      <mt-tab-item 
+      v-for="(item, index) in data" 
+      :key="index" 
+      :id='item.router' 
+      :ref="item.router"
+      @touchstart.native="touchDom(item.router, 'add')" 
+      @touchend.native="touchDom(item.router, 'rem')" 
+      @click.native="goClick">
         <i slot='icon' class="iconfont" :class="item.icon"></i>
         <div class="tabSpan">
           {{item.name}}
@@ -46,6 +53,7 @@
 
 <script>
 import resource from '@/utils/resource.json'
+import { addClass, remClass } from '@/utils/index'
 import { mapGetters } from 'vuex'
 export default {
   name: 'layout',
@@ -83,6 +91,14 @@ export default {
     },
     back () {
       this.$router.back()
+    },
+    touchDom (dom, name) {
+      console.log(dom)
+      if (name === 'add') {
+        addClass(this.$refs[dom][0].$el, 'home-li_click')
+      } else {
+        remClass(this.$refs[dom][0].$el, 'home-li_click')
+      }
     }
   },
   computed: {

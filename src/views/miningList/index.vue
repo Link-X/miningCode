@@ -79,7 +79,13 @@
       <mt-tab-container v-model="selected">
         <mt-tab-container-item id="1">
           <ul class="hom-ul">
-            <li v-for="(item, index) in list" :key="item.card" class="home-li">
+            <li 
+            v-for="(item, index) in list" 
+            :key="item.card" 
+            class="home-li" 
+            :ref='item.card'
+            @touchstart="touchDom(item.card, 'add')" 
+            @touchend="touchDom(item.card, 'rem')">
               <div class="home-img">
                 <img src='../../assets/img/kuan.jpg' />
               </div>
@@ -112,6 +118,7 @@
 
 <script>
 import Scroll from '@/components/scroll.vue'
+import { addClass, remClass } from '@/utils/index'
 export default {
   data () {
     return {
@@ -196,6 +203,13 @@ export default {
     },
     switchover (data) {
       this.active = data
+    },
+    touchDom (dom, name) {
+      if (name === 'add') {
+        addClass(this.$refs[dom][0], 'home-li_click')
+      } else {
+        remClass(this.$refs[dom][0], 'home-li_click')
+      }
     }
   }
 }

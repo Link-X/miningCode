@@ -89,6 +89,7 @@
   color: #333;
   border-radius: 5px;
 }
+
 .bold {
   font-weight: bold;
   font-size: 0.15rem;
@@ -104,7 +105,7 @@
     width: 75%;
   }
   .picker-selected {
-    color: #26a2ff;
+    color: #26a2ff !important;
   }
 }
 </style>
@@ -124,9 +125,11 @@
     </mt-swipe>
     <div class="home-center">
       <div class="home-statistics">
-        <div>矿机台数<span class="bold">{{2}}</span>台</div>
+        <div>矿机台数
+          <span class="bold">{{2}}</span>台</div>
         <div>
-          gpu数<span  class="bold">{{3}}</span>个
+          gpu数
+          <span class="bold">{{3}}</span>个
         </div>
       </div>
       <div class="home-global">
@@ -135,7 +138,7 @@
           <mt-button class="global-header_btn" size='small' type='primary' @click="screenList">筛选</mt-button>
         </div>
         <Scroll :data='list' class="home-scroll">
-          <ul class="home-global_ul">
+          <ul class="home-global_ul" @touchstart="touchDom($event, 'add')" @touchend="touchDom($event, 'rem')">
             <li class="home-global_li" v-for="(item, index) in list" :key="item.id">
               <div class="global-li_left">
                 <span class="li-left_span">{{item.name}}</span>
@@ -161,6 +164,7 @@
 
 <script>
 import Scroll from '@/components/scroll.vue'
+import { touchDoms } from '@/utils/index'
 export default {
   data () {
     return {
@@ -249,6 +253,9 @@ export default {
       if (this.index || this.index === 0) {
         this.list[this.index].mine = value[0]
       }
+    },
+    touchDom (dom, name) {
+      touchDoms(dom, name)
     }
   },
   components: {

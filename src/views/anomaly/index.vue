@@ -24,6 +24,8 @@
   padding: .1rem .15rem;
   background-color: #fff;
   border-bottom: 1px solid #ddd;
+  position: relative;
+  z-index: 20;
   &:last-child {
     border: none;
   }
@@ -59,7 +61,9 @@
 <template>
   <div class="home">
     <Scroll :data='list' class="home-scroll">
-      <ul class="hom-ul">
+      <ul class="hom-ul" 
+      @touchstart="touchDom($event, 'add')" 
+      @touchend="touchDom($event, 'rem')">
         <router-link tag='li' :to="{path: '/anomalyDetals', query: {id: item.card}}" v-for="(item, index) in list" :key="item.card" class="home-li">
           <div class="home-img">
             <img src='../../assets/img/kuan.jpg' />
@@ -80,6 +84,7 @@
 
 <script>
 import Scroll from '@/components/scroll.vue'
+import { touchDoms } from '@/utils/index'
 export default {
   data () {
     return {
@@ -152,6 +157,9 @@ export default {
         path: '/anomalyDetals',
         query: { id: id }
       })
+    },
+    touchDom (dom, name) {
+      touchDoms(dom, name)
     }
   }
 }

@@ -24,9 +24,9 @@
   background-color: #fff;
   padding: .1rem .15rem;
   border-bottom: 1px solid #ddd;
-   &:last-child {
-     border: none;
-   }
+  &:last-child {
+    border: none;
+  }
 }
 
 .home-img {
@@ -60,8 +60,16 @@
 <template>
   <div class="home">
     <Scroll :data='list' class="home-scroll">
-      <ul class="hom-ul">
-        <li v-for="(item, index) in list" :key="item.card" class="home-li">
+      <ul 
+      class="hom-ul"  
+      @touchstart="touchDom($event, 'add')" 
+      @touchend="touchDom($event, 'rem')">
+        <li 
+          v-for="(item, index) in list" 
+          :key="item.card" 
+          class="home-li" 
+          @touchstart="touchDom(item.card, 'add')" 
+          @touchend="touchDom(item.card, 'rem')">
           <div class="home-img">
             <img src='../../assets/img/minDetails.jpg' />
           </div>
@@ -80,6 +88,7 @@
 
 <script>
 import Scroll from '@/components/scroll.vue'
+import { touchDoms } from '@/utils/index'
 export default {
   data () {
     return {
@@ -133,6 +142,11 @@ export default {
           card: '33'
         }
       ]
+    }
+  },
+  methods: {
+    touchDom (dom, name) {
+      touchDoms(dom, name)
     }
   },
   components: {

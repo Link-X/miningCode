@@ -83,7 +83,7 @@
   p {
     border-radius: 3px;
     height: .15rem;
-    line-height: .15rem;
+    line-height: .151rem;
     background-color: #5Ca5DB;
     padding: 0.05rem;
     color: #fff;
@@ -125,7 +125,7 @@
         </li>
       </ul>
     </div>
-    <ul>
+    <ul @touchstart="touchDom($event, 'add')" @touchend="touchDom($event, 'rem')">
       <router-link tag='li' :to="{path: '/anomaly'}" class="account-sisint">
         <span>
           <i class="iconfont icon-weibiaoti3"></i>
@@ -149,7 +149,12 @@
 </template>
 
 <script>
+import { touchDoms } from '@/utils/index'
 export default {
-
+  methods: {
+    touchDom (dom, name) {
+      touchDoms(dom, name)
+    }
+  }
 }
 </script>
