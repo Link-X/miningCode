@@ -1,0 +1,11 @@
+{
+  "header": {
+    "home": "首页",
+    "anomaly": "异常消息",
+    "account": "我的",
+    "anomalyDetals": "消息列表",
+    "mineDetails": "矿机详情",
+    "setting": "我的设置",
+    "miningList": "矿机筛选"
+  }
+}
