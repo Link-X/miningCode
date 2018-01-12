@@ -24,6 +24,9 @@
   padding: .1rem .15rem;
   background-color: #fff;
   border-bottom: 1px solid #ddd;
+  &:last-child {
+    border: none;
+  }
 }
 
 .home-img {
@@ -39,7 +42,7 @@
 .home-text {
   display: flex;
   flex-wrap: wrap;
-  padding: .05rem 0;
+  padding: .1rem 0;
   align-content: space-between;
   h3 {
     width: 100%;
@@ -48,7 +51,7 @@
 
 .home-text_bottom {
   span {
-    margin-right: 5px;
+    margin-right: 15px;
   }
 }
 </style>
@@ -57,10 +60,7 @@
   <div class="home">
     <Scroll :data='list' class="home-scroll">
       <ul class="hom-ul">
-        <router-link tag='li' 
-        :to="{path: '/anomalyDetals', query: {id: item.card}}" v-for="(item, index) in list" 
-        :key="item.card"
-        class="home-li">
+        <router-link tag='li' :to="{path: '/anomalyDetals', query: {id: item.card}}" v-for="(item, index) in list" :key="item.card" class="home-li">
           <div class="home-img">
             <img src='../../assets/img/kuan.jpg' />
           </div>

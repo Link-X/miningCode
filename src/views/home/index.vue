@@ -9,16 +9,13 @@
 }
 
 .home-statistics {
-  height: .28rem;
+  height: .35rem;
   background-color: #EFEFEF;
   display: flex;
   justify-content: space-between;
   padding: 0 .15rem;
   align-items: center;
-}
-
-.home-global {
-  margin-top: .03rem;
+  border-bottom: 1px solid #DDD;
 }
 
 .home-global_header {
@@ -36,7 +33,7 @@
 
 .home-scroll {
   position: fixed;
-  top: 2.6rem;
+  top: 2.68rem;
   left: 0;
   right: 0;
   bottom: 0;
@@ -54,11 +51,16 @@
   border-bottom: 1px solid #eee;
   position: relative; // overflow: hidden;
   background-color: #fff;
+  &:last-child {
+    border: none;
+  }
 }
 
 .li-left_span {
   display: block;
   margin-bottom: .2rem;
+  font-size: .15rem;
+  font-weight: bold;
 }
 
 .li-left_bottom {
@@ -71,7 +73,7 @@
 
 .li-right_icon {
   position: absolute;
-  top: .16rem;
+  top: .17rem;
   right: .05rem;
   bottom: 0;
   padding: 0.1rem 0.13rem;
@@ -85,6 +87,12 @@
   padding: 0.08rem 0.1rem;
   border: 1px solid #eee;
   color: #333;
+  border-radius: 5px;
+}
+.bold {
+  font-weight: bold;
+  font-size: 0.15rem;
+  margin: 0 0.05rem;
 }
 </style>
 <style lang='less'>
@@ -94,6 +102,9 @@
   }
   .mint-popup {
     width: 75%;
+  }
+  .picker-selected {
+    color: #26a2ff;
   }
 }
 </style>
@@ -113,9 +124,9 @@
     </mt-swipe>
     <div class="home-center">
       <div class="home-statistics">
-        <div>矿机台数{{2}}台</div>
+        <div>矿机台数<span class="bold">{{2}}</span>台</div>
         <div>
-          gpu数{{3}}个
+          gpu数<span  class="bold">{{3}}</span>个
         </div>
       </div>
       <div class="home-global">

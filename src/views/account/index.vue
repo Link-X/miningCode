@@ -1,7 +1,20 @@
 <style lang='less' scoped>
 .account-top {
-  padding: .2rem 0;
+  // padding: .2rem 0;
+  height: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #EFEFEF;
+  background: url('../../assets/img/toxian.jpg') no-repeat center 50%;
+  background-size: cover;
+  background-size: 100%;
+  margin-bottom: 10px;
+  -webkit-filter: blur(5px);
+  /* Chrome, Opera */
+  -moz-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
 }
 
 .account-img {
@@ -9,6 +22,13 @@
   height: .8rem;
   border-radius: 50%;
   overflow: hidden;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  position: absolute;
+  top: 0.75rem;
+  left: 0;
+  right: 0;
+  bottom: 0;
   margin: 0 auto;
   img {
     width: 100%;
@@ -19,6 +39,7 @@
 .account-center {
   height: 1.1rem;
   background-color: #fff;
+  margin-bottom: 0.05rem;
 }
 
 .account-center_ul {
@@ -69,12 +90,15 @@
     margin-left: 0.1rem;
   }
 }
+
 .account-color2 {
   background-color: #0E67B7!important;
 }
+
 .account-color {
   background-color: #7DD53F!important;
 }
+
 .account-sisint2 {
   i {
     font-size: .16rem;
@@ -85,9 +109,9 @@
 <template>
   <div class="account">
     <div class="account-top">
-      <div class="account-img">
-        <img src="../../assets/img/toxian.jpg" />
-      </div>
+    </div>
+    <div class="account-img">
+      <img src="../../assets/img/toxian.jpg" />
     </div>
     <div class="account-center">
       <ul class="account-center_ul">

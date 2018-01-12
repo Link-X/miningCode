@@ -9,5 +9,8 @@ export default {
   SET_IPHONE (state, data) {
     state.iphone = data
     localStorage.setItem('miningIphone', data)
+  },
+  SET_NEWSNUMBER (state, data) {
+    state.newsNumber = data
   }
 }

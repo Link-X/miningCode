@@ -2,12 +2,16 @@
 .mining-header {
   height: .3rem;
   display: flex;
-  padding: 0 .15rem;
+  padding: 0 .16rem;
   align-items: center;
   justify-content: space-between;
   color: #333;
-  background-color: #EFEFEF;
+  background-color: #dee1e2;
   font-weight: 100;
+  border: none;
+  span {
+    font-weight: bold;
+  }
 }
 
 .mining-ul {
@@ -15,13 +19,21 @@
     background-color: #fff;
     display: flex;
     justify-content: space-between;
-    padding: 0.05rem 0.15rem;
+    align-items: center;
+    padding: 0.09rem 0.15rem;
     word-break: break-all;
+    border-bottom: 1px solid #ddd;
+    &:last-child {
+      border: none;
+    }
     div {
       width: 0.65rem;
-      color: #838383;
+      font-family: bold;
+      color: #000;
     }
     p {
+      font-weight: 100;
+      color: #676767;
       text-align: right;
     }
   }
@@ -93,7 +105,10 @@
   justify-content: space-between;
   align-items: center;
   padding: .17rem;
-  border-top: 1px solid #DEDEDE;
+  border-bottom: 1px solid #DEDEDE;
+  &:last-child {
+    border: none;
+  }
 }
 </style>
 <template>
@@ -114,7 +129,7 @@
         <div class="mining-name">
           <h3 class="mining-header">
             <span>矿机名称</span>
-            <span>01012</span>
+            <span>一号矿机</span>
           </h3>
           <ul class="mining-ul">
             <li>

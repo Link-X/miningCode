@@ -24,6 +24,9 @@
   background-color: #fff;
   padding: .1rem .15rem;
   border-bottom: 1px solid #ddd;
+   &:last-child {
+     border: none;
+   }
 }
 
 .home-img {
@@ -40,7 +43,7 @@
   display: flex;
   flex-wrap: wrap;
   flex-grow: 1;
-  padding: .05rem 0;
+  padding: .1rem 0;
   align-content: space-between;
   h3 {
     width: 100%;
@@ -60,7 +63,7 @@
       <ul class="hom-ul">
         <li v-for="(item, index) in list" :key="item.card" class="home-li">
           <div class="home-img">
-            <img src='../../assets/img/kuan.jpg' />
+            <img src='../../assets/img/minDetails.jpg' />
           </div>
           <div class="home-text">
             <h3>{{item.title}}</h3>

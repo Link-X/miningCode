@@ -11,7 +11,8 @@ const store = new Vuex.Store({
   mutations,
   state: {
     isLogin: false,
-    iphone: ''
+    iphone: '',
+    newsNumber: 5
   },
   modules: {
     app

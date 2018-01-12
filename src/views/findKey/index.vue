@@ -85,7 +85,7 @@
     <div class="login-from">
       <ul class="login-from_ul">
         <li class="login-from_userName">
-          <i class="iconfont icon-me"></i>
+          <i class="iconfont icon-mima"></i>
           <input type="password" class="from-inp" v-model="from.username" />
         </li>
         <li>

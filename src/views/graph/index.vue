@@ -1,12 +1,14 @@
 <style lang='less' scoped>
 .graph-scroll_child {
-  padding-bottom: .8rem;
+  padding-bottom: .9rem;
 }
 
 .graph-header {
-  background-color: #EFEFEF;
+  background-color: #dee1e2;
   line-height: 0.35rem;
   text-indent: 0.1rem;
+  border-bottom: 1px solid #ddd;
+  border-top: 1px solid #ddd;
   color: #333;
 }
 

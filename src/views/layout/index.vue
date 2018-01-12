@@ -6,8 +6,24 @@
 .layout-bar {
   height: .565rem;
 }
-</style>
 
+.iconfont {
+  font-size: 0.2rem;
+}
+
+.tabSpan {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  position: relative;
+}
+
+.errorC {
+  position: absolute;
+  top: -13px;
+  right: -13px;
+}
+</style>
 <template>
   <div class="layout">
     <mt-header :title="headerTitle">
@@ -18,7 +34,11 @@
     <router-view></router-view>
     <mt-tabbar :fixed='true' v-model="selected" class="layout-bar">
       <mt-tab-item v-for="(item, index) in data" :key="index" :id='item.router' @click.native="goClick">
-        <i slot='icon' class="iconfont" :class="item.icon"></i>{{item.name}}
+        <i slot='icon' class="iconfont" :class="item.icon"></i>
+        <div class="tabSpan">
+          {{item.name}}
+          <mt-badge size="small" class="errorC" type="error" v-if="item.isBadge">{{newsNumber}}</mt-badge>
+        </div>
       </mt-tab-item>
     </mt-tabbar>
   </div>
@@ -26,6 +46,7 @@
 
 <script>
 import resource from '@/utils/resource.json'
+import { mapGetters } from 'vuex'
 export default {
   name: 'layout',
   data () {
@@ -40,7 +61,8 @@ export default {
         {
           name: '异常消息',
           icon: 'icon-xiaoxi',
-          router: '/anomaly'
+          router: '/anomaly',
+          isBadge: true
         },
         {
           name: '我的',
@@ -69,7 +91,10 @@ export default {
     },
     isBack () {
       return this.headerTitle !== '首页' && this.headerTitle !== '异常消息' && this.headerTitle !== '我的'
-    }
+    },
+    ...mapGetters([
+      'newsNumber'
+    ])
   },
   watch: {
     '$route' (to, from) {
