@@ -164,6 +164,7 @@
 
 <script>
 import Scroll from '@/components/scroll.vue'
+import { mapActions } from 'vuex'
 import { touchDoms } from '@/utils/index'
 export default {
   data () {
@@ -232,6 +233,9 @@ export default {
       ]
     }
   },
+  created () {
+    this.getList()
+  },
   methods: {
     screenList () {
       this.$router.push({
@@ -256,7 +260,10 @@ export default {
     },
     touchDom (dom, name) {
       touchDoms(dom, name)
-    }
+    },
+    ...mapActions([
+      'getList'
+    ])
   },
   components: {
     Scroll
