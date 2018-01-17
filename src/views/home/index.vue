@@ -234,9 +234,12 @@ export default {
     }
   },
   created () {
-    this.getList()
+    this.getData()
   },
   methods: {
+    getData () {
+      this.getList()
+    },
     screenList () {
       this.$router.push({
         path: '/miningList'
