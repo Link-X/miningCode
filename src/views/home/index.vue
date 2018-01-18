@@ -150,8 +150,8 @@
                 <span class="li-left_span">{{item.hostname}}</span>
                 <div class="li-left_bottom">
                   <span>gpu数{{item.gpus}}</span>
-                  <!-- <span class="li-left_btn" @click="clickMining(item.id, index)">星火</span> -->
-                  <span class="li-left_btn">星火</span>
+                   <span class="li-left_btn" @click="clickMining(item.id, index)">星火</span> 
+                  <!-- <span class="li-left_btn">星火</span> -->
                   <p>{{item.date}}</p>
                 </div>
               </div>
