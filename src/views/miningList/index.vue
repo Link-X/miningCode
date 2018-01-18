@@ -81,23 +81,22 @@
           <ul class="hom-ul">
             <li 
             v-for="(item, index) in list" 
-            :key="item.card" 
-            class="home-li" 
-            :ref='item.card'
-            @touchstart="touchDom(item.card, 'add')" 
-            @touchend="touchDom(item.card, 'rem')">
+            :key="item.id" class="home-li" 
+            :ref='item.id' 
+            @touchstart="touchDom(item.id, 'add')" 
+            @touchend="touchDom(item.id, 'rem')">
               <div class="home-img">
                 <img src='../../assets/img/kuan.jpg' />
               </div>
               <div class="home-text">
                 <h3 class="list-title">
-                  {{item.title}}
+                  {{item.hostname}}
                   <mt-button class="list-header_btn" size='small' type='primary' @click="screenList(item.id)">查看详情</mt-button>
                 </h3>
                 <div class="home-text_bottom">
                   <div>
-                    <span>矿池:{{item.hashrate}}</span>
-                    <span>显卡:{{item.card}}个</span>
+                    <span>矿池:星火</span>
+                    <span>显卡:{{item.gpus}}个</span>
                   </div>
                   <div>{{item.date}}</div>
                 </div>
@@ -118,83 +117,35 @@
 
 <script>
 import Scroll from '@/components/scroll.vue'
-import { addClass, remClass } from '@/utils/index'
+import { addClass, remClass, getDate } from '@/utils/index'
+import { mapActions } from 'vuex'
 export default {
   data () {
     return {
       selected: '1',
-      list: [
-        {
-          img: '../../assets/img/kuan.jpg',
-          title: '1号矿机',
-          hashrate: '鱼池子',
-          card: '2',
-          date: '2018.1.1',
-          id: '123423'
-        },
-        {
-          img: '../../assets/img/kuan.jpg',
-          title: '1号矿机',
-          hashrate: '鱼池子',
-          card: '323',
-          date: '2018.1.1',
-          id: '123423'
-        },
-        {
-          img: '../../assets/img/kuan.jpg',
-          title: '1号矿机',
-          hashrate: '鱼池子',
-          card: '4',
-          date: '2018.1.1',
-          id: '123423'
-        },
-        {
-          img: '../../assets/img/kuan.jpg',
-          title: '1号矿机',
-          hashrate: '鱼池子',
-          card: '5',
-          date: '2018.1.1',
-          id: '123423'
-        },
-        {
-          img: '../../assets/img/kuan.jpg',
-          title: '1号矿机',
-          hashrate: '鱼池子',
-          card: '8',
-          date: '2018.1.1',
-          id: '123423'
-        },
-        {
-          img: '../../assets/img/kuan.jpg',
-          title: '1号矿机',
-          hashrate: '鱼池子',
-          card: '326',
-          date: '2018.1.1',
-          id: '123423'
-        },
-        {
-          img: '../../assets/img/kuan.jpg',
-          title: '1号矿机',
-          hashrate: '鱼池子',
-          card: '77',
-          date: '2018.1.1',
-          id: '123423'
-        },
-        {
-          img: '../../assets/img/kuan.jpg',
-          title: '1号矿机',
-          hashrate: '鱼池子',
-          card: '33',
-          date: '2018.1.1',
-          id: '123423'
-        }
-      ]
+      list: []
     }
   },
   components: {
     Scroll
   },
+  created () {
+    this.getData()
+  },
   methods: {
+    getData () {
+      this.getList().then(data => {
+        let code = +data.code
+        if (code === 200) {
+          this.list = data.data.map(v => {
+            v.date = getDate()
+            v.gpus = +v.gpus
+            this.gpuNub += v.gpus
+            return v
+          })
+        }
+      })
+    },
     screenList (id) {
       this.$router.push({
         path: '/mineDetails',
@@ -210,7 +161,10 @@ export default {
       } else {
         remClass(this.$refs[dom][0], 'home-li_click')
       }
-    }
+    },
+    ...mapActions([
+      'getList'
+    ])
   }
 }
 </script>

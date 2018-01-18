@@ -28,10 +28,10 @@ export default new Router({
         { path: '/mineDetails', name: 'mineDetails', component: MineDetails },
         { path: '/graph', name: 'graph', component: Graph },
         { path: '/setting', name: 'setting', component: Setting },
-        { path: '/miningList', name: 'miningList', component: MiningList }
+        { path: '/miningList', name: 'miningList', component: MiningList },
+        { path: '/FindKey', name: 'FindKey', component: FindKey }
       ]
     },
-    { path: '/FindKey', name: 'FindKey', component: FindKey },
     {
       path: '*', component: noDef
     }

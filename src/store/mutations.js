@@ -4,7 +4,7 @@ export default {
   },
   SET_TOKEN_STORAGE (state, data) {
     localStorage.setItem('token', data)
-    state.isLogin = true
+    state.isLogin = localStorage.getItem('token', data)
   },
   SET_IPHONE (state, data) {
     state.iphone = data

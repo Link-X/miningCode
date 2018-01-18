@@ -90,6 +90,12 @@
   border-radius: 5px;
 }
 
+.home-null {
+  text-align: center;
+  height: 0.5rem;
+  line-height: 1rem;
+}
+
 .bold {
   font-weight: bold;
   font-size: 0.15rem;
@@ -126,10 +132,10 @@
     <div class="home-center">
       <div class="home-statistics">
         <div>矿机台数
-          <span class="bold">{{2}}</span>台</div>
+          <span class="bold">{{list.length}}</span>台</div>
         <div>
           gpu数
-          <span class="bold">{{3}}</span>个
+          <span class="bold">{{gpuNub}}</span>个
         </div>
       </div>
       <div class="home-global">
@@ -141,10 +147,11 @@
           <ul class="home-global_ul" @touchstart="touchDom($event, 'add')" @touchend="touchDom($event, 'rem')">
             <li class="home-global_li" v-for="(item, index) in list" :key="item.id">
               <div class="global-li_left">
-                <span class="li-left_span">{{item.name}}</span>
+                <span class="li-left_span">{{item.hostname}}</span>
                 <div class="li-left_bottom">
-                  <span>gpu数{{item.gpu}}</span>
-                  <span class="li-left_btn" @click="clickMining(item.id, index)">{{item.mine}}</span>
+                  <span>gpu数{{item.gpus}}</span>
+                  <!-- <span class="li-left_btn" @click="clickMining(item.id, index)">星火</span> -->
+                  <span class="li-left_btn">星火</span>
                   <p>{{item.date}}</p>
                 </div>
               </div>
@@ -154,6 +161,7 @@
             </li>
           </ul>
         </Scroll>
+        <div class="home-null" v-if="!list.length">暂无矿机</div>
       </div>
     </div>
     <mt-popup v-model="popupVisible" position="center" popup-transition="popup-fade">
@@ -165,13 +173,14 @@
 <script>
 import Scroll from '@/components/scroll.vue'
 import { mapActions } from 'vuex'
-import { touchDoms } from '@/utils/index'
+import { touchDoms, getDate } from '@/utils/index'
 export default {
   data () {
     return {
       id: '',
-      index: null,
+      index: 0,
       popupVisible: false,
+      gpuNub: 0,
       slots: [
         {
           flex: 1,
@@ -180,57 +189,7 @@ export default {
           textAlign: 'right'
         }
       ],
-      list: [
-        {
-          name: '矿机1',
-          gpu: 2,
-          mine: '星火[广州]',
-          date: '2018.10.01',
-          id: '12323'
-        },
-        {
-          name: '矿机2',
-          gpu: 2,
-          mine: '双优',
-          date: '2018.10.01',
-          id: '123323'
-        },
-        {
-          name: '矿机3',
-          gpu: 2,
-          mine: '星火',
-          date: '2018.10.01',
-          id: '121233'
-        },
-        {
-          name: '矿机4',
-          gpu: 2,
-          mine: '星火[华北]',
-          date: '2018.10.01',
-          id: '12123323'
-        },
-        {
-          name: '矿机1',
-          gpu: 2,
-          mine: '双优',
-          date: '2018.10.01',
-          id: '12121sf32fs3'
-        },
-        {
-          name: '矿机1',
-          gpu: 2,
-          mine: '星火[华北]',
-          date: '2018.10.01',
-          id: '12123df232fs3'
-        },
-        {
-          name: '矿机1',
-          gpu: 2,
-          mine: '星火[华南]',
-          date: '2018.10.01',
-          id: '12123asdf232fs3'
-        }
-      ]
+      list: []
     }
   },
   created () {
@@ -239,7 +198,15 @@ export default {
   methods: {
     getData () {
       this.getList().then(data => {
-        console.log(data)
+        let code = +data.code
+        if (code === 200) {
+          this.list = data.data.map(v => {
+            v.date = getDate()
+            v.gpus = +v.gpus
+            this.gpuNub += v.gpus
+            return v
+          })
+        }
       })
     },
     screenList () {
@@ -259,9 +226,9 @@ export default {
       this.popupVisible = true
     },
     onValuesChange (picker, value) {
-      if (this.index || this.index === 0) {
-        this.list[this.index].mine = value[0]
-      }
+      // if (this.index || this.index === 0) {
+      //   this.list[this.index].mine = value[0]
+      // }
     },
     touchDom (dom, name) {
       touchDoms(dom, name)

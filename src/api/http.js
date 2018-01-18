@@ -2,8 +2,7 @@ import axios from 'axios'
 import { logout } from '@/utils/index'
 import { Toast } from 'mint-ui'
 // import store from '../store'
-
-// /ams-api/auth /ams-api/system
+import qs from 'qs'
 const http = axios.create({
   timeout: 10000,
   baseURL: 'http://47.91.249.184',
@@ -11,45 +10,60 @@ const http = axios.create({
     'Content-Type': 'application/x-www-form-urlencoded'
   }
 })
-
-// request 拦截器
-http.interceptors.request.use(config => {
-  // config.headers['token'] = store.getters.token
-  return config
-}, Promise.reject)
-
-// response 拦截器
-http.interceptors.response.use(response => {
-  let data = response
-  if (data.code === '200') {
-    return data.data
+const token = axios.create({
+  timeout: 10000,
+  baseURL: 'http://47.91.249.184',
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
   }
-  if (data.code === 6001) {
+})
+
+export const reqResolve = config => {
+  if (config.method === 'post') {
+    const token = localStorage.getItem('token')
+    let data = qs.parse(config.data)
+    config.data = qs.stringify({
+      token: token,
+      ...data
+    })
+  } else if (config.method === 'get') {
+    config.params = {
+      token: token,
+      ...config.params
+    }
+  }
+  return config
+}
+export const reqReject = error => {
+  console.error(error)
+  return Promise.reject(error)
+}
+export const resResolve = response => {
+  let code = +response.data.code
+  if (code === 500) {
     Toast({
-      title: '登录失效',
-      message: data.msg,
+      message: response.data.message,
       position: 'top',
       iconClass: ''
     })
-    logout()
+    if (response.data.message === '请先登录' || response.data.message.indexOf('失效') !== -1) {
+      setTimeout(() => {
+        logout()
+      }, 800)
+    }
     return
   }
+  return response.data
+}
+export const resReject = error => {
   Toast({
-    title: '请求错误',
-    message: data.msg,
-    position: 'top',
-    iconClass: ''
-  })
-  return Promise.reject(data)
-}, error => {
-  console.log('err' + error.message)
-  Toast({
-    title: '请求错误',
-    message: error.message,
+    message: '请求错误',
     position: 'top',
     iconClass: ''
   })
   return Promise.reject(error)
-})
+}
+http.interceptors.request.use(reqResolve, reqReject)
+http.interceptors.response.use(resResolve)
 
-export { http }
+export { http, token }

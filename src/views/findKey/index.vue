@@ -5,6 +5,9 @@
   height: 100%;
   background-color: #1C85C8;
   border: 1px solid #1C85C8;
+  position: absolute;
+  z-index: 200;
+  bottom: 0;
 }
 
 .login-header {
@@ -79,22 +82,30 @@
   }
 }
 </style>
+<style lang='less'>
+.find {
+  .mint-toast {
+    z-index: 20001;
+  }
+}
+</style>
+
 <template>
-  <div class="login">
+  <div class="login find">
     <div class="login-header">设置密码</div>
     <div class="login-from">
       <ul class="login-from_ul">
         <li class="login-from_userName">
           <i class="iconfont icon-mima"></i>
-          <input type="password" class="from-inp" v-model="from.username" />
+          <input type="password" class="from-inp" v-model="from.pwd1" />
         </li>
         <li>
           <i class="iconfont icon-mima"></i>
-          <input type="password" class="from-inp" v-model="from.passWord" />
+          <input type="password" class="from-inp" v-model="from.pwd2" />
         </li>
       </ul>
     </div>
-    <mt-button class="login-from_submit" type="default">确定</mt-button>
+    <mt-button class="login-from_submit" type="default" @click="submit">确定</mt-button>
     <div class="login-close" @click="back">
       <i class="iconfont icon-closecircleoutline"></i>
     </div>
@@ -102,20 +113,56 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+import { logout } from '@/utils/index'
 export default {
   data () {
     return {
       from: {
-        username: '12',
-        passWord: '2'
+        pwd1: '12',
+        pwd2: '2'
       }
     }
   },
   methods: {
     back () {
-      console.log(1)
       this.$router.back()
-    }
+    },
+    submit () {
+      if (this.from.pwd1 !== this.from.pwd2) {
+        this.$toast({
+          message: '两次密码不一致',
+          position: 'top',
+          duration: 5000
+        })
+        return
+      }
+      this.setPwd()
+    },
+    setPwd () {
+      this.setPasd(this.from).then(res => {
+        let code = +res.code
+        if (code === 200) {
+          this.$toast({
+            message: res.message,
+            position: 'top',
+            iconClass: ''
+          })
+          this.goHome()
+        }
+      })
+    },
+    goHome () {
+      setTimeout(() => {
+        this.$router.push({
+          path: '/home'
+        })
+        logout()
+      }, 1000)
+    },
+    ...mapActions([
+      'setPasd'
+    ])
   }
 }
 </script>
