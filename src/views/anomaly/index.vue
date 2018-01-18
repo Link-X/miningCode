@@ -62,7 +62,12 @@
       <ul class="hom-ul" 
       @touchstart="touchDom($event, 'add')" 
       @touchend="touchDom($event, 'rem')">
-        <router-link tag='li' :to="{path: '/anomalyDetals', query: {id: item.card}}" v-for="(item, index) in list" :key="item.card" class="home-li">
+        <router-link 
+        tag='li' 
+        :to="{path: '/anomalyDetals', query: {id: item.card}}" 
+        v-for="(item, index) in list" 
+        :key="item.card" 
+        class="home-li">
           <div class="home-img">
             <img src='../../assets/img/kuan.jpg' />
           </div>

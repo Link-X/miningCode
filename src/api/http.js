@@ -5,7 +5,11 @@ import { Toast } from 'mint-ui'
 
 // /ams-api/auth /ams-api/system
 const http = axios.create({
-  timeout: 10000
+  timeout: 10000,
+  baseURL: 'http://47.91.249.184',
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  }
 })
 
 // request 拦截器
@@ -16,8 +20,8 @@ http.interceptors.request.use(config => {
 
 // response 拦截器
 http.interceptors.response.use(response => {
-  let data = response.data
-  if (data.code === 0) {
+  let data = response
+  if (data.code === '200') {
     return data.data
   }
   if (data.code === 6001) {
@@ -38,7 +42,7 @@ http.interceptors.response.use(response => {
   })
   return Promise.reject(data)
 }, error => {
-  console.log('err' + error)
+  console.log('err' + error.message)
   Toast({
     title: '请求错误',
     message: error.message,

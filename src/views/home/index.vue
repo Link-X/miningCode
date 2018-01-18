@@ -238,7 +238,9 @@ export default {
   },
   methods: {
     getData () {
-      this.getList()
+      this.getList().then(data => {
+        console.log(data)
+      })
     },
     screenList () {
       this.$router.push({
