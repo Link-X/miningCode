@@ -71,6 +71,7 @@
     display: flex;
     width: .28rem;
     height: .28rem;
+    line-height: .29rem;
     background-color: #5Ca5DB;
     border-radius: 50%;
     align-items: center;
@@ -83,7 +84,7 @@
   p {
     border-radius: 3px;
     height: .15rem;
-    line-height: .151rem;
+    line-height: .165rem;
     background-color: #5Ca5DB;
     padding: 0.05rem;
     color: #fff;
