@@ -47,7 +47,7 @@ export default {
         me.$emit('scroll', pos)
       })
       // 滚动完 派发一个时间
-      this.scroll.on('touchend', (pos) => {
+      this.scroll.on('touchEnd', (pos) => {
         me.$emit('scrollEnd', pos)
       })
     },

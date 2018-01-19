@@ -92,18 +92,7 @@
 }
 
 .login-achieved {
-  position: absolute;
-  width: .5rem;
-  height: .5rem;
-  top: 25%;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  animation: myfirst 5s infinite;
+  // animation: myfirst 5s infinite;
   i {
     font-size: .45rem;
     color: #fff;
@@ -141,9 +130,9 @@
               <span>忘记密码,重新找回密码</span>
               <i class="iconfont icon-yuanjiantou"></i>
             </router-link>
-          </div> -->
-    <div class="login-achieved" v-if="achieved">
-      <i class="iconfont icon-jiazai"></i>
+         </div> -->
+    <div class="login-achieved centers" v-if="achieved">
+      <mt-spinner :size='50' color="rgb(255, 255, 255)" type="triple-bounce"></mt-spinner>
     </div>
   </div>
 </template>
@@ -162,22 +151,25 @@ export default {
   },
   methods: {
     submit () {
-      this.login(this.from).then(res => {
-        let data = res.data
-        let code = +data.code
-        this.achieved = true
-        if (code !== 200) {
-          this.$toast({
-            title: '请求错误',
-            message: data.message,
-            position: 'top',
-            iconClass: ''
-          })
-          return
-        }
-        this.SET_TOKEN_STORAGE(data.data.token)
-        this.SET_IPHONE(this.from.username)
-      })
+      this.achieved = true
+      setTimeout(() => {
+        this.login(this.from).then(res => {
+          let data = res.data
+          let code = +data.code
+          this.achieved = false
+          if (code !== 200) {
+            this.$toast({
+              title: '请求错误',
+              message: data.message,
+              position: 'top',
+              iconClass: ''
+            })
+            return
+          }
+          this.SET_TOKEN_STORAGE(data.data.token)
+          this.SET_IPHONE(this.from.username)
+        })
+      }, 500)
     },
     ...mapActions([
       'login'

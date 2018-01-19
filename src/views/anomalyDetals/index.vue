@@ -88,55 +88,55 @@
 
 <script>
 import Scroll from '@/components/scroll.vue'
-import { touchDoms } from '@/utils/index'
+// import { touchDoms } from '@/utils/index'
 export default {
   data () {
     return {
       list: [
         {
-          img: '../../assets/img/kuan.jpg',
+          img: '../../assets/img/kuan.png',
           title: '故障1',
           card: '2',
           date: '2018.01.03  15:00'
         },
         {
-          img: '../../assets/img/kuan.jpg',
+          img: '../../assets/img/kuan.png',
           title: '故障13',
           date: '2018.01.03  15:00',
           card: '323'
         },
         {
-          img: '../../assets/img/kuan.jpg',
+          img: '../../assets/img/kuan.png',
           title: '故障3',
           date: '2018.01.03  15:00',
           card: '4'
         },
         {
-          img: '../../assets/img/kuan.jpg',
+          img: '../../assets/img/kuan.png',
           title: '故障4',
           date: '2018.01.03  15:00',
           card: '5'
         },
         {
-          img: '../../assets/img/kuan.jpg',
+          img: '../../assets/img/kuan.png',
           title: '故障6',
           date: '2018.01.03  15:00',
           card: '8'
         },
         {
-          img: '../../assets/img/kuan.jpg',
+          img: '../../assets/img/kuan.png',
           title: '故障4',
           date: '2018.01.03  15:00',
           card: '326'
         },
         {
-          img: '../../assets/img/kuan.jpg',
+          img: '../../assets/img/kuan.png',
           title: '故障8',
           date: '2018.01.03  15:00',
           card: '77'
         },
         {
-          img: '../../assets/img/kuan.jpg',
+          img: '../../assets/img/kuan.png',
           title: '故障9',
           date: '2018.01.03  15:00',
           card: '33'
@@ -146,7 +146,7 @@ export default {
   },
   methods: {
     touchDom (dom, name) {
-      touchDoms(dom, name)
+      // touchDoms(dom, name)
     }
   },
   components: {

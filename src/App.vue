@@ -23,7 +23,7 @@ export default {
 }
 </script>
 <style lang='less'>
-@import 'http://at.alicdn.com/t/font_534889_1zkg5j3u8mvaemi.css';
+@import 'http://at.alicdn.com/t/font_534889_y3mooqoiu0v34n29.css';
 #app {
   width: 100%;
   height: 100%;

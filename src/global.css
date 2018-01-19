@@ -95,3 +95,16 @@ a:active {
 .home-li_click {
   background-color: #f1f1f1 !important;
 }
+.centers {
+  position: absolute;
+  width: .8rem;
+  height: .5rem;
+  top: 11%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

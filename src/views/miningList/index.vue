@@ -66,6 +66,31 @@
 .list-header_btn {
   height: .25rem;
 }
+
+.mining-list_refresh {
+  position: fixed;
+  bottom: .7rem;
+  right: .25rem;
+  padding: .09rem;
+  i {
+    color: #afa489;
+    font-weight: bold;
+    font-size: .25rem;
+  }
+}
+
+.xuan {
+  animation: myfirst 1s infinite;
+}
+
+@keyframes myfirst {
+  from {
+    transform: rotate(0deg)
+  }
+  to {
+    transform: rotate(360deg)
+  }
+}
 </style>
 
 <template>
@@ -79,14 +104,9 @@
       <mt-tab-container v-model="selected">
         <mt-tab-container-item id="1">
           <ul class="hom-ul">
-            <li 
-            v-for="(item, index) in list" 
-            :key="item.id" class="home-li" 
-            :ref='item.id' 
-            @touchstart="touchDom(item.id, 'add')" 
-            @touchend="touchDom(item.id, 'rem')">
+            <li v-for="(item, index) in list" :key="item.id" class="home-li" :ref='item.id' @touchstart="touchDom(item.id, 'add')" @touchend="touchDom(item.id, 'rem')">
               <div class="home-img">
-                <img src='../../assets/img/kuan.jpg' />
+                <img src='../../assets/img/kuan.png' />
               </div>
               <div class="home-text">
                 <h3 class="list-title">
@@ -105,13 +125,16 @@
           </ul>
         </mt-tab-container-item>
         <mt-tab-container-item id="2">
-          <mt-cell v-for="(n, index) in 5" :key="index" :title="'测试 ' + n" />
+          <mt-cell v-for="(n, index) in 15" :key="index" :title="'测试 ' + n" />
         </mt-tab-container-item>
         <mt-tab-container-item id="3">
-          <mt-cell v-for="(n, index) in 7" :key="index" :title="'选项 ' + n" />
+          <mt-cell v-for="(n, index) in 27" :key="index" :title="'选项 ' + n" />
         </mt-tab-container-item>
       </mt-tab-container>
     </Scroll>
+    <div class="mining-list_refresh"  :class="{'xuan': upajx === true}" @click="upData">
+      <i class="iconfont icon-shuaxin"></i>
+    </div>
   </div>
 </template>
 
@@ -123,7 +146,8 @@ export default {
   data () {
     return {
       selected: '1',
-      list: []
+      list: [],
+      upajx: false
     }
   },
   components: {
@@ -136,11 +160,13 @@ export default {
     getData () {
       this.getList().then(data => {
         let code = +data.code
+        setTimeout(() => {
+          this.upajx = false
+        }, 1000)
         if (code === 200) {
           this.list = data.data.map(v => {
             v.date = getDate()
             v.gpus = +v.gpus
-            this.gpuNub += v.gpus
             return v
           })
         }
@@ -154,6 +180,11 @@ export default {
     },
     switchover (data) {
       this.active = data
+    },
+    upData () {
+      this.upajx = true
+      console.log(this.selected)
+      this.getData()
     },
     touchDom (dom, name) {
       if (name === 'add') {

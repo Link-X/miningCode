@@ -43,6 +43,7 @@
 }
 
 .home-global_ul {
+  position: relative;
   padding-bottom: 1rem;
 }
 
@@ -126,7 +127,7 @@
         <img class="home-lun_img" src="../../assets/img/lunbo2.jpg" />
       </mt-swipe-item>
       <mt-swipe-item>
-        <img class="home-lun_img" src="../../assets/img/kuan.jpg" />
+        <img class="home-lun_img" src="../../assets/img/kuan.png" />
       </mt-swipe-item>
     </mt-swipe>
     <div class="home-center">
@@ -143,14 +144,15 @@
           全局统计
           <mt-button class="global-header_btn" size='small' type='primary' @click="screenList">筛选</mt-button>
         </div>
-        <Scroll :data='list' class="home-scroll">
+        <Scroll :data='list' @scroll='scroll' @scrollEnd='scrollEnd' ref="homeScr" class="home-scroll">
           <ul class="home-global_ul" @touchstart="touchDom($event, 'add')" @touchend="touchDom($event, 'rem')">
+            <long-din :logdin='logdin'></long-din>
             <li class="home-global_li" v-for="(item, index) in list" :key="item.id">
               <div class="global-li_left">
                 <span class="li-left_span">{{item.hostname}}</span>
                 <div class="li-left_bottom">
                   <span>gpu数{{item.gpus}}</span>
-                   <span class="li-left_btn" @click="clickMining(item.id, index)">星火</span> 
+                  <span class="li-left_btn" @click="clickMining(item.id, index)">星火</span>
                   <!-- <span class="li-left_btn">星火</span> -->
                   <p>{{item.date}}</p>
                 </div>
@@ -172,6 +174,7 @@
 
 <script>
 import Scroll from '@/components/scroll.vue'
+import LongDin from '@/components/logdin.vue'
 import { mapActions } from 'vuex'
 import { touchDoms, getDate } from '@/utils/index'
 export default {
@@ -179,8 +182,10 @@ export default {
     return {
       id: '',
       index: 0,
+      logdin: false,
       popupVisible: false,
       gpuNub: 0,
+      scollY: 0,
       slots: [
         {
           flex: 1,
@@ -197,7 +202,9 @@ export default {
   },
   methods: {
     getData () {
+      this.gpuNub = 0
       this.getList().then(data => {
+        this.scollY = 0
         let code = +data.code
         if (code === 200) {
           this.list = data.data.map(v => {
@@ -233,12 +240,23 @@ export default {
     touchDom (dom, name) {
       touchDoms(dom, name)
     },
+    scroll (pos) {
+      this.logdin = false
+      this.scollY = pos.y
+    },
+    scrollEnd (pos) {
+      if (this.scollY > 0) {
+        this.logdin = true
+        this.getData()
+      }
+    },
     ...mapActions([
       'getList'
     ])
   },
   components: {
-    Scroll
+    Scroll,
+    LongDin
   }
 }
 </script>

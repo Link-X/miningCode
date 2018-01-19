@@ -2,11 +2,11 @@
 .mining-header {
   height: .3rem;
   display: flex;
-  padding: 0 .16rem;
+  padding: .03rem .16rem;
   align-items: center;
   justify-content: space-between;
   color: #333;
-  background-color: #dee1e2;
+  background-color: #f5f5f5 ;
   font-weight: 100;
   border: none;
   span {

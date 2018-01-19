@@ -58,18 +58,12 @@
 
 <template>
   <div class="home">
-    <Scroll :data='list' class="home-scroll">
-      <ul class="hom-ul" 
-      @touchstart="touchDom($event, 'add')" 
-      @touchend="touchDom($event, 'rem')">
-        <router-link 
-        tag='li' 
-        :to="{path: '/anomalyDetals', query: {id: item.card}}" 
-        v-for="(item, index) in list" 
-        :key="item.card" 
-        class="home-li">
+    <Scroll :data='list' @scroll='scroll' @scrollEnd='scrollEnd' class="home-scroll">
+      <ul class="hom-ul" @touchstart="touchDom($event, 'add')" @touchend="touchDom($event, 'rem')">
+        <long-din :logdin='logdin'></long-din>
+        <router-link tag='li' :to="{path: '/anomalyDetals', query: {id: item.card}}" v-for="(item, index) in list" :key="item.card" class="home-li">
           <div class="home-img">
-            <img src='../../assets/img/kuan.jpg' />
+            <img src='../../assets/img/abnormalp.png' />
           </div>
           <div class="home-text">
             <h3>{{item.title}}</h3>
@@ -87,62 +81,65 @@
 
 <script>
 import Scroll from '@/components/scroll.vue'
-import { touchDoms } from '@/utils/index'
+import LongDin from '@/components/logdin.vue'
+// import { touchDoms } from '@/utils/index'
 export default {
   data () {
     return {
+      logdin: false,
+      scollY: 0,
       list: [
         {
-          img: '../../assets/img/kuan.jpg',
+          img: '../../assets/img/abnormalp.png',
           title: '1号矿机',
           temperature: '50',
           hashrate: '58.65',
           card: '2'
         },
         {
-          img: '../../assets/img/kuan.jpg',
+          img: '../../assets/img/abnormalp.png',
           title: '1号矿机',
           temperature: '50',
           hashrate: '58.65',
           card: '323'
         },
         {
-          img: '../../assets/img/kuan.jpg',
+          img: '../../assets/img/abnormalp.png',
           title: '1号矿机',
           temperature: '50',
           hashrate: '58.65',
           card: '4'
         },
         {
-          img: '../../assets/img/kuan.jpg',
+          img: '../../assets/img/abnormalp.png',
           title: '1号矿机',
           temperature: '50',
           hashrate: '58.65',
           card: '5'
         },
         {
-          img: '../../assets/img/kuan.jpg',
+          img: '../../assets/img/abnormalp.png',
           title: '1号矿机',
           temperature: '50',
           hashrate: '58.65',
           card: '8'
         },
         {
-          img: '../../assets/img/kuan.jpg',
+          img: '../../assets/img/abnormalp.png',
           title: '1号矿机',
           temperature: '50',
           hashrate: '58.65',
           card: '326'
         },
         {
-          img: '../../assets/img/kuan.jpg',
+          img: '../../assets/img/abnormalp.png',
           title: '1号矿机',
           temperature: '50',
           hashrate: '58.65',
           card: '77'
         },
         {
-          img: '../../assets/img/kuan.jpg',
+          img: '../../assets/img/abnormalp.png',
           title: '1号矿机',
           temperature: '50',
           hashrate: '58.65',
@@ -152,7 +149,8 @@ export default {
     }
   },
   components: {
-    Scroll
+    Scroll,
+    LongDin
   },
   methods: {
     getAnomaly (id) {
@@ -162,7 +160,16 @@ export default {
       })
     },
     touchDom (dom, name) {
-      touchDoms(dom, name)
+      // touchDoms(dom, name)
+    },
+    scroll (pos) {
+      this.logdin = false
+      this.scollY = pos.y
+    },
+    scrollEnd (pos) {
+      if (this.scollY > 0) {
+        this.logdin = true
+      }
     }
   }
 }
