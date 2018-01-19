@@ -90,6 +90,34 @@
     }
   }
 }
+
+.login-achieved {
+  position: absolute;
+  width: .5rem;
+  height: .5rem;
+  top: 25%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: myfirst 5s infinite;
+  i {
+    font-size: .45rem;
+    color: #fff;
+  }
+}
+
+@keyframes myfirst {
+  from {
+    transform: rotate(0deg)
+  }
+  to {
+    transform: rotate(360deg)
+  }
+}
 </style>
 
 <template>
@@ -109,11 +137,14 @@
     </div>
     <mt-button class="login-from_submit" type="default" @click.native="submit">登录</mt-button>
     <!-- <div class="login-bottom">
-      <router-link class="login-bottom_link" tag="div" to="/FindKey">
-        <span>忘记密码,重新找回密码</span>
-        <i class="iconfont icon-yuanjiantou"></i>
-      </router-link>
-    </div> -->
+            <router-link class="login-bottom_link" tag="div" to="/FindKey">
+              <span>忘记密码,重新找回密码</span>
+              <i class="iconfont icon-yuanjiantou"></i>
+            </router-link>
+          </div> -->
+    <div class="login-achieved" v-if="achieved">
+      <i class="iconfont icon-jiazai"></i>
+    </div>
   </div>
 </template>
 
@@ -122,6 +153,7 @@ import { mapMutations, mapActions } from 'vuex'
 export default {
   data () {
     return {
+      achieved: false,
       from: {
         username: '13512345678',
         password: '123456'
@@ -133,6 +165,7 @@ export default {
       this.login(this.from).then(res => {
         let data = res.data
         let code = +data.code
+        this.achieved = true
         if (code !== 200) {
           this.$toast({
             title: '请求错误',
