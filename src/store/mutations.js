@@ -12,5 +12,8 @@ export default {
   },
   SET_NEWSNUMBER (state, data) {
     state.newsNumber = data
+  },
+  SET_SERCH (state, data) {
+    state.serch = data
   }
 }

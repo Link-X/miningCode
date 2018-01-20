@@ -125,12 +125,12 @@
       </ul>
     </div>
     <mt-button class="login-from_submit" type="default" @click.native="submit">登录</mt-button>
-    <!-- <div class="login-bottom">
-            <router-link class="login-bottom_link" tag="div" to="/FindKey">
+ <!-- <div class="login-bottom">
+        <router-link class="login-bottom_link" tag="div" to="/FindKey">
               <span>忘记密码,重新找回密码</span>
-              <i class="iconfont icon-yuanjiantou"></i>
-            </router-link>
-         </div> -->
+            <i class="iconfont icon-yuanjiantou"></i>
+        </router-link>
+       </div> -->
     <div class="login-achieved centers" v-if="achieved">
       <mt-spinner :size='50' color="rgb(255, 255, 255)" type="triple-bounce"></mt-spinner>
     </div>

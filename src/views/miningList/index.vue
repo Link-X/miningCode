@@ -95,58 +95,53 @@
 
 <template>
   <div class="home">
-    <mt-navbar v-model="selected">
-      <mt-tab-item id="1">全部矿机</mt-tab-item>
+    <mt-navbar v-model="selected" @click.native="select">
+      <mt-tab-item id="0">全部矿机</mt-tab-item>
       <mt-tab-item id="2">掉线矿机</mt-tab-item>
-      <mt-tab-item id="3">异常矿机</mt-tab-item>
+      <mt-tab-item id="1">异常矿机</mt-tab-item>
     </mt-navbar>
     <Scroll :data='list' class="home-scroll">
-      <mt-tab-container v-model="selected">
-        <mt-tab-container-item id="1">
-          <ul class="hom-ul">
-            <li v-for="(item, index) in list" :key="item.id" class="home-li" :ref='item.id' @touchstart="touchDom(item.id, 'add')" @touchend="touchDom(item.id, 'rem')">
-              <div class="home-img">
-                <img src='../../assets/img/kuan.png' />
+      <ul class="hom-ul">
+        <li v-for="(item, index) in list" :key="item.id" class="home-li" :ref='item.id' @touchstart="touchDom(item.id, 'add')" @touchend="touchDom(item.id, 'rem')">
+          <div class="home-img">
+            <img src='../../assets/img/kuan.png' />
+          </div>
+          <div class="home-text">
+            <h3 class="list-title">
+              {{item.hostname}}
+              <mt-button class="list-header_btn" size='small' type='primary' @click="screenList(item.id)">查看详情</mt-button>
+            </h3>
+            <div class="home-text_bottom">
+              <div>
+                <span>矿池:星火{{serch}}</span>
+                <span>显卡:{{item.gpus}}个</span>
               </div>
-              <div class="home-text">
-                <h3 class="list-title">
-                  {{item.hostname}}
-                  <mt-button class="list-header_btn" size='small' type='primary' @click="screenList(item.id)">查看详情</mt-button>
-                </h3>
-                <div class="home-text_bottom">
-                  <div>
-                    <span>矿池:星火</span>
-                    <span>显卡:{{item.gpus}}个</span>
-                  </div>
-                  <div>{{item.date}}</div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </mt-tab-container-item>
-        <mt-tab-container-item id="2">
-          <mt-cell v-for="(n, index) in 15" :key="index" :title="'测试 ' + n" />
-        </mt-tab-container-item>
-        <mt-tab-container-item id="3">
-          <mt-cell v-for="(n, index) in 27" :key="index" :title="'选项 ' + n" />
-        </mt-tab-container-item>
-      </mt-tab-container>
+              <div>{{item.date}}</div>
+            </div>
+          </div>
+        </li>
+      </ul>
     </Scroll>
-    <div class="mining-list_refresh"  :class="{'xuan': upajx === true}" @click="upData">
+    <div class="mining-list_refresh" :class="{'xuan': upajx === true}" @click="upData">
       <i class="iconfont icon-shuaxin"></i>
     </div>
+    <mt-search v-model="searchData" v-show="serch">
+      <mt-cell>
+      </mt-cell>
+    </mt-search>
   </div>
 </template>
 
 <script>
 import Scroll from '@/components/scroll.vue'
 import { addClass, remClass, getDate } from '@/utils/index'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   data () {
     return {
-      selected: '1',
+      selected: '0',
       list: [],
+      searchData: '',
       upajx: false
     }
   },
@@ -156,9 +151,16 @@ export default {
   created () {
     this.getData()
   },
+  mounted () {
+    this.$emit('serc', () => {
+      console.log(2)
+    })
+  },
   methods: {
     getData () {
-      this.getList().then(data => {
+      this.upajx = true
+      let data = this.setSelectData()
+      this.getList(data).then(data => {
         let code = +data.code
         setTimeout(() => {
           this.upajx = false
@@ -172,6 +174,9 @@ export default {
         }
       })
     },
+    select () {
+      this.getData()
+    },
     screenList (id) {
       this.$router.push({
         path: '/mineDetails',
@@ -181,9 +186,12 @@ export default {
     switchover (data) {
       this.active = data
     },
+    setSelectData () {
+      return {
+        type: this.selected !== '0' ? this.selected : undefined
+      }
+    },
     upData () {
-      this.upajx = true
-      console.log(this.selected)
       this.getData()
     },
     touchDom (dom, name) {
@@ -195,6 +203,16 @@ export default {
     },
     ...mapActions([
       'getList'
+    ])
+  },
+  watch: {
+    serch () {
+      console.log(23)
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'serch'
     ])
   }
 }

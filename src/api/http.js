@@ -43,8 +43,7 @@ export const resResolve = response => {
   if (code === 500) {
     Toast({
       message: response.data.message,
-      position: 'top',
-      iconClass: ''
+      position: 'top'
     })
     if (response.data.message === '请先登录' || response.data.message.indexOf('失效') !== -1) {
       setTimeout(() => {
@@ -58,8 +57,7 @@ export const resResolve = response => {
 export const resReject = error => {
   Toast({
     message: '请求错误',
-    position: 'top',
-    iconClass: ''
+    position: 'top'
   })
   return Promise.reject(error)
 }
