@@ -87,8 +87,8 @@ export default {
       this.$router.back()
     },
     search () {
-      console.log(123)
       this.SET_SERCH(true)
+      console.log(this.serch)
     },
     touchDom (dom, name) {
       if (name === 'add') {
@@ -112,7 +112,8 @@ export default {
       return this.headerTitle === '矿机筛选'
     },
     ...mapGetters([
-      'newsNumber'
+      'newsNumber',
+      'serch'
     ])
   },
   watch: {

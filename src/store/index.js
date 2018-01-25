@@ -11,11 +11,11 @@ const store = new Vuex.Store({
   getters,
   actions,
   mutations,
-  serch: false,
   state: {
     isLogin: false,
     iphone: '',
-    newsNumber: 5
+    newsNumber: 5,
+    serch: false
   },
   modules: {
     app

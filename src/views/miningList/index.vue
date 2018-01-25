@@ -102,7 +102,13 @@
     </mt-navbar>
     <Scroll :data='list' class="home-scroll">
       <ul class="hom-ul">
-        <li v-for="(item, index) in list" :key="item.id" class="home-li" :ref='item.id' @touchstart="touchDom(item.id, 'add')" @touchend="touchDom(item.id, 'rem')">
+        <li 
+        v-for="(item, index) in list" 
+        :key="item.id" 
+        class="home-li" 
+        :ref='item.id' 
+        @touchstart="touchDom(item.id, 'add')" 
+        @touchend="touchDom(item.id, 'rem')">
           <div class="home-img">
             <img src='../../assets/img/kuan.png' />
           </div>
@@ -113,7 +119,7 @@
             </h3>
             <div class="home-text_bottom">
               <div>
-                <span>矿池:星火{{serch}}</span>
+                <span>矿池:{{item.proxypool1}}</span>
                 <span>显卡:{{item.gpus}}个</span>
               </div>
               <div>{{item.date}}</div>

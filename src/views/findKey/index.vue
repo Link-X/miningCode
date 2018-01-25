@@ -129,6 +129,14 @@ export default {
       this.$router.back()
     },
     submit () {
+      if (!this.from.pwd1 && !this.from.pwd1) {
+        this.$toast({
+          message: '密码不能为空',
+          position: 'top',
+          duration: 5000
+        })
+        return
+      }
       if (this.from.pwd1 !== this.from.pwd2) {
         this.$toast({
           message: '两次密码不一致',
