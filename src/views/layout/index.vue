@@ -92,7 +92,7 @@ export default {
   mounted () {
     setInterval(() => {
       this.getNunber()
-    }, 80000)
+    }, 70000)
   },
   methods: {
     getNunber () {
