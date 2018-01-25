@@ -74,9 +74,9 @@
             <img src='../../assets/img/minDetails.jpg' />
           </div>
           <div class="home-text">
-            <h3>{{item.title}}</h3>
+            <h3>故障{{index + 1}}</h3>
             <div class="home-text_bottom">
-              <span>故障详情</span>
+              <span>{{item}}</span>
               <span class="text-bottom_right">{{item.date}}</span>
             </div>
           </div>
@@ -88,66 +88,40 @@
 
 <script>
 import Scroll from '@/components/scroll.vue'
-// import { touchDoms } from '@/utils/index'
+import { mapActions } from 'vuex'
+import { touchDoms } from '@/utils/index'
 export default {
   data () {
     return {
-      list: [
-        {
-          img: '../../assets/img/kuan.png',
-          title: '故障1',
-          card: '2',
-          date: '2018.01.03  15:00'
-        },
-        {
-          img: '../../assets/img/kuan.png',
-          title: '故障13',
-          date: '2018.01.03  15:00',
-          card: '323'
-        },
-        {
-          img: '../../assets/img/kuan.png',
-          title: '故障3',
-          date: '2018.01.03  15:00',
-          card: '4'
-        },
-        {
-          img: '../../assets/img/kuan.png',
-          title: '故障4',
-          date: '2018.01.03  15:00',
-          card: '5'
-        },
-        {
-          img: '../../assets/img/kuan.png',
-          title: '故障6',
-          date: '2018.01.03  15:00',
-          card: '8'
-        },
-        {
-          img: '../../assets/img/kuan.png',
-          title: '故障4',
-          date: '2018.01.03  15:00',
-          card: '326'
-        },
-        {
-          img: '../../assets/img/kuan.png',
-          title: '故障8',
-          date: '2018.01.03  15:00',
-          card: '77'
-        },
-        {
-          img: '../../assets/img/kuan.png',
-          title: '故障9',
-          date: '2018.01.03  15:00',
-          card: '33'
-        }
-      ]
+      list: []
     }
+  },
+  created () {
+    this.getData()
   },
   methods: {
     touchDom (dom, name) {
-      // touchDoms(dom, name)
-    }
+      touchDoms(dom, name)
+    },
+    getData () {
+      let data = {
+        id: this.$route.query.id
+      }
+      this.getDetail(data).then(res => {
+        if (res.code === 200) {
+          if (+res.data.cpu_temp > 80) {
+            this.list.push('cpu温度异常')
+          }
+          if (+res.data.hash < 18) {
+            this.list.push('算力异常')
+          }
+          console.log(this.list)
+        }
+      })
+    },
+    ...mapActions([
+      'getDetail'
+    ])
   },
   components: {
     Scroll

@@ -97,11 +97,11 @@
       <ul class="login-from_ul">
         <li class="login-from_userName">
           <i class="iconfont icon-mima"></i>
-          <input type="password" class="from-inp" v-model="from.pwd1" />
+          <input type="password" autocomplete='off' class="from-inp" v-model="from.pwd1" />
         </li>
         <li>
           <i class="iconfont icon-mima"></i>
-          <input type="password" class="from-inp" v-model="from.pwd2" />
+          <input type="password"  autocomplete='off' class="from-inp" v-model="from.pwd2" />
         </li>
       </ul>
     </div>

@@ -61,16 +61,20 @@
     <Scroll :data='list' @scroll='scroll' @scrollEnd='scrollEnd' class="home-scroll">
       <ul class="hom-ul" @touchstart="touchDom($event, 'add')" @touchend="touchDom($event, 'rem')">
         <long-din :logdin='logdin'></long-din>
-        <router-link tag='li' :to="{path: '/anomalyDetals', query: {id: item.card}}" v-for="(item, index) in list" :key="item.card" class="home-li">
+        <router-link tag='li' 
+        :to="{path: '/anomalyDetals', 
+        query: {id: item.id}}" 
+        v-for="(item, index) in list" 
+        :key="item.id" class="home-li">
           <div class="home-img">
             <img src='../../assets/img/abnormalp.png' />
           </div>
           <div class="home-text">
-            <h3>{{item.title}}</h3>
+            <h3>{{item.hostname}}</h3>
             <div class="home-text_bottom">
-              <span>温度:{{item.temperature}}</span>
-              <span>算力:{{item.hashrate}}</span>
-              <span>显卡:{{item.card}}个</span>
+              <span>温度:{{+item.cpu_temp}}</span>
+              <span>算力:{{+item.hash}}</span>
+              <span>显卡:{{item.gpus}}个</span>
             </div>
           </div>
         </router-link>
@@ -82,75 +86,22 @@
 <script>
 import Scroll from '@/components/scroll.vue'
 import LongDin from '@/components/logdin.vue'
-// import { touchDoms } from '@/utils/index'
+import { mapActions, mapMutations } from 'vuex'
+import { touchDoms } from '@/utils/index'
 export default {
   data () {
     return {
       logdin: false,
       scollY: 0,
-      list: [
-        {
-          img: '../../assets/img/abnormalp.png',
-          title: '1号矿机',
-          temperature: '50',
-          hashrate: '58.65',
-          card: '2'
-        },
-        {
-          img: '../../assets/img/abnormalp.png',
-          title: '1号矿机',
-          temperature: '50',
-          hashrate: '58.65',
-          card: '323'
-        },
-        {
-          img: '../../assets/img/abnormalp.png',
-          title: '1号矿机',
-          temperature: '50',
-          hashrate: '58.65',
-          card: '4'
-        },
-        {
-          img: '../../assets/img/abnormalp.png',
-          title: '1号矿机',
-          temperature: '50',
-          hashrate: '58.65',
-          card: '5'
-        },
-        {
-          img: '../../assets/img/abnormalp.png',
-          title: '1号矿机',
-          temperature: '50',
-          hashrate: '58.65',
-          card: '8'
-        },
-        {
-          img: '../../assets/img/abnormalp.png',
-          title: '1号矿机',
-          temperature: '50',
-          hashrate: '58.65',
-          card: '326'
-        },
-        {
-          img: '../../assets/img/abnormalp.png',
-          title: '1号矿机',
-          temperature: '50',
-          hashrate: '58.65',
-          card: '77'
-        },
-        {
-          img: '../../assets/img/abnormalp.png',
-          title: '1号矿机',
-          temperature: '50',
-          hashrate: '58.65',
-          card: '33'
-        }
-      ]
+      list: []
     }
   },
   components: {
     Scroll,
     LongDin
+  },
+  created () {
+    this.getData()
   },
   methods: {
     getAnomaly (id) {
@@ -160,7 +111,20 @@ export default {
       })
     },
     touchDom (dom, name) {
-      // touchDoms(dom, name)
+      touchDoms(dom, name)
+    },
+    getData () {
+      this.getList({type: 2}).then(res => {
+        if (res.code === '200') {
+          this.SET_NEWSNUMBER('')
+          this.list = res.data
+          // res.data.forEach((v) => {
+          //   if (+v.cpu_temp > 80 || +v.hash < 18) {
+          //     this.list.push(v)
+          //   }
+          // })
+        }
+      })
     },
     scroll (pos) {
       this.logdin = false
@@ -170,7 +134,13 @@ export default {
       if (this.scollY > 0) {
         this.logdin = true
       }
-    }
+    },
+    ...mapMutations([
+      'SET_NEWSNUMBER'
+    ]),
+    ...mapActions([
+      'getList'
+    ])
   }
 }
 </script>

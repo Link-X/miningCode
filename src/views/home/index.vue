@@ -68,7 +68,7 @@
   // display: flex;
   p {
     float: right;
-    margin-right: .3rem;
+    // margin-right: .3rem;
   }
 }
 
