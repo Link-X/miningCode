@@ -119,8 +119,8 @@ export default {
   data () {
     return {
       from: {
-        pwd1: '12',
-        pwd2: '2'
+        pwd1: '',
+        pwd2: ''
       }
     }
   },
