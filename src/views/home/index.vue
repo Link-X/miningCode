@@ -273,7 +273,7 @@ export default {
           this.$toast({
             message: '修改成功',
             position: 'top',
-            duration: 5000
+            duration: 3500
           })
           this.list[this.index]['proxypool1'] = this.miningValue.name
           this.popupVisible = false
