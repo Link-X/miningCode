@@ -43,8 +43,8 @@ export const CpuTemperature = (data) => {
     },
     legend: {
       left: 'center',
-      top: '2%',
-      data: ['1号GPU', '2号GPU']
+      top: '0%',
+      data: ['1号GPU', '2号GPU', '3号GPU', '4号GPU', '5号GPU', '6号GPU', '7号GPU', '8号GPU']
     },
     xAxis: {
       type: 'category',
@@ -55,22 +55,53 @@ export const CpuTemperature = (data) => {
       left: '3%',
       right: '4%',
       bottom: '3%',
+      top: '20%',
       containLabel: true
     },
     yAxis: {
-      type: 'log',
+      type: 'value',
       name: '温度'
     },
     series: [
       {
         name: '1号GPU',
         type: 'line',
-        data: [13, 32, 92, 27, 861, 247, 20]
+        data: [10, 32, 92, 27, 22, 36, 20]
       },
       {
         name: '2号GPU',
         type: 'line',
-        data: [100, 252, 43, 8, 126, 32, 564]
+        data: [10, 56, 43, 8, 126, 32, 23]
+      },
+      {
+        name: '3号GPU',
+        type: 'line',
+        data: [1, 12, 83, 18, 56, 32, 200]
+      },
+      {
+        name: '4号GPU',
+        type: 'line',
+        data: [20, 15, 35, 18, 76, 39, 23]
+      },
+      {
+        name: '5号GPU',
+        type: 'line',
+        data: [50, 55, 63, 138, 56, 29, 13]
+      },
+      {
+        name: '6号GPU',
+        type: 'line',
+        data: [20, 35, 13, 158, 26, 19, 3]
+      },
+      {
+        name: '7号GPU',
+        type: 'line',
+        data: [120, 15, 53, 68, 22, 19, 23]
+      },
+      {
+        name: '8号GPU',
+        type: 'line',
+        data: [10, 25, 33, 38, 52, 129, 150]
       }
     ]
   }
