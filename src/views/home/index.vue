@@ -123,15 +123,24 @@
 
 <template>
   <div class="home">
-    <mt-swipe :auto="4000" class="home-lun">
+    <mt-swipe :auto="5500" class="home-lun">
       <mt-swipe-item>
-        <img class="home-lun_img" src="../../assets/img/longbo.jpg" />
+        <img 
+        @click='touchImg(1)' 
+        class="home-lun_img" 
+        src="../../assets/img/longbo.jpg" />
       </mt-swipe-item>
       <mt-swipe-item>
-        <img class="home-lun_img" src="../../assets/img/lunbo2.jpg" />
+        <img 
+        @click='touchImg(2)' 
+        class="home-lun_img" 
+        src="../../assets/img/lunbo2.jpg" />
       </mt-swipe-item>
       <mt-swipe-item>
-        <img class="home-lun_img" src="../../assets/img/kuan.png" />
+        <img 
+        @click='touchImg(3)' 
+        class="home-lun_img" 
+        src="../../assets/img/kuan.png" />
       </mt-swipe-item>
     </mt-swipe>
     <div class="home-center">
@@ -146,12 +155,27 @@
       <div class="home-global">
         <div class="home-global_header">
           全局统计
-          <mt-button class="global-header_btn" size='small' type='primary' @click="screenList">筛选</mt-button>
+          <mt-button 
+          class="global-header_btn" 
+          size='small' 
+          type='primary' 
+          @click="screenList">筛选</mt-button>
         </div>
-        <Scroll :data='list' @scroll='scroll' @scrollEnd='scrollEnd' ref="homeScr" class="home-scroll">
-          <ul class="home-global_ul" @touchstart="touchDom($event, 'add')" @touchend="touchDom($event, 'rem')">
+        <Scroll 
+        :data='list' 
+        @scroll='scroll' 
+        @scrollEnd='scrollEnd' 
+        ref="homeScr" 
+        class="home-scroll">
+          <ul 
+          class="home-global_ul" 
+          @touchstart="touchDom($event, 'add')" 
+          @touchend="touchDom($event, 'rem')">
             <long-din :logdin='logdin'></long-din>
-            <li class="home-global_li" v-for="(item, index) in list" :key="item.id">
+            <li 
+            class="home-global_li" 
+            v-for="(item, index) in list" 
+            :key="item.id">
               <div class="global-li_left">
                 <span class="li-left_span">{{item.hostname}}</span>
                 <div class="li-left_bottom">
@@ -170,7 +194,10 @@
         <div class="home-null" v-if="!list.length">暂无矿机</div>
       </div>
     </div>
-    <mt-popup v-model="popupVisible" position="center" popup-transition="popup-fade">
+    <mt-popup 
+    v-model="popupVisible" 
+    position="center" 
+    popup-transition="popup-fade">
       <mt-picker :slots="slots" @change="onValuesChange"></mt-picker>
     </mt-popup>
   </div>
@@ -218,6 +245,12 @@ export default {
             return v
           })
         }
+      })
+    },
+    touchImg (index) {
+      this.$router.push({
+        path: '/article',
+        query: { id: index }
       })
     },
     screenList () {

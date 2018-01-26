@@ -4,10 +4,10 @@
   width: 100%;
 }
 
-.hom-ul {
+.search-ul {
+  margin-top: 20px;
   padding-bottom: .75rem;
 }
-
 .home-scroll {
   position: absolute;
   top: 95px;
@@ -108,66 +108,20 @@
       <mt-tab-item id="2">异常矿机</mt-tab-item>
     </mt-navbar>
     <Scroll :data='list' class="home-scroll" v-show="!serch">
-      <ul class="hom-ul">
-        <li 
-        v-for="(item, index) in list" 
-        :key="item.id" 
-        class="home-li" 
-        :ref='item.id' 
-        @touchstart="touchDom(item.id, 'add')" 
-        @touchend="touchDom(item.id, 'rem')">
-          <div class="home-img">
-            <img src='../../assets/img/kuan.png' />
-          </div>
-          <div class="home-text">
-            <h3 class="list-title">
-              {{item.hostname}}
-              <mt-button class="list-header_btn" size='small' type='primary' @click="screenList(item.id)">查看详情</mt-button>
-            </h3>
-            <div class="home-text_bottom">
-              <div>
-                <span>矿池:{{item.proxypool1}}</span>
-                <span>显卡:{{item.gpus}}个</span>
-              </div>
-              <div>{{item.date}}</div>
-            </div>
-          </div>
-        </li>
-      </ul>
+      <MiningList :list='list' @screenList='screenList'></MiningList>
     </Scroll>
-    <div class="mining-list_refresh" :class="{'xuan': upajx === true}" @click="upData">
+    <div 
+    class="mining-list_refresh" 
+    :class="{'xuan': upajx === true}"
+    @click="upData">
       <i class="iconfont icon-shuaxin"></i>
     </div>
     <mt-search class="search" v-model="searchValue" v-show="serch">
       <mt-cell>
-        <Scroll :data='list' class="home-scroll home-scroll2" v-show="!serch">
-          <ul class="hom-ul">
-            <li 
-            v-for="(item, index) in searchData" 
-            :key="item.id" 
-            class="home-li" 
-            :ref='item.id' 
-            @touchstart="touchDom(item.id, 'add')" 
-            @touchend="touchDom(item.id, 'rem')">
-              <div class="home-img">
-                <img src='../../assets/img/kuan.png' />
-              </div>
-              <div class="home-text">
-                <h3 class="list-title">
-                  {{item.hostname}}
-                  <mt-button class="list-header_btn" size='small' type='primary' @click="screenList(item.id)">查看详情</mt-button>
-                </h3>
-                <div class="home-text_bottom">
-                  <div>
-                    <span>矿池:{{item.proxypool1}}</span>
-                    <span>显卡:{{item.gpus}}个</span>
-                  </div>
-                  <div>{{item.date}}</div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </Scroll>
+        <MiningList 
+        :list='searchData' 
+        @screenList='screenList' 
+        :isSearch='true'></MiningList>
       </mt-cell>
     </mt-search>
   </div>
@@ -175,7 +129,8 @@
 
 <script>
 import Scroll from '@/components/scroll.vue'
-import { addClass, remClass, getDate } from '@/utils/index'
+import MiningList from '@/views/miningList/list'
+import { getDate } from '@/utils/index'
 import { mapActions, mapGetters, mapMutations } from 'vuex'
 export default {
   data () {
@@ -188,7 +143,7 @@ export default {
     }
   },
   components: {
-    Scroll
+    Scroll, MiningList
   },
   created () {
     this.getData()
@@ -245,13 +200,6 @@ export default {
     },
     upData () {
       this.getData()
-    },
-    touchDom (dom, name) {
-      if (name === 'add') {
-        addClass(this.$refs[dom][0], 'home-li_click')
-      } else {
-        remClass(this.$refs[dom][0], 'home-li_click')
-      }
     },
     ...mapActions([
       'getList'

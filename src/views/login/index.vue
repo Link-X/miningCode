@@ -120,11 +120,18 @@
         </li>
         <li>
           <i class="iconfont icon-mima"></i>
-          <input type="password" autocomplete='off' class="from-inp" v-model="from.password" />
+          <input 
+          type="password" 
+          autocomplete='off' 
+          class="from-inp" 
+          v-model="from.password" />
         </li>
       </ul>
     </div>
-    <mt-button class="login-from_submit" type="default" @click.native="submit">登录</mt-button>
+    <mt-button 
+    class="login-from_submit" 
+    type="default" 
+    @click.native="submit">登录</mt-button>
  <!-- <div class="login-bottom">
         <router-link class="login-bottom_link" tag="div" to="/FindKey">
               <span>忘记密码,重新找回密码</span>
@@ -132,7 +139,10 @@
         </router-link>
        </div> -->
     <div class="login-achieved centers" v-if="achieved">
-      <mt-spinner :size='50' color="rgb(255, 255, 255)" type="triple-bounce"></mt-spinner>
+      <mt-spinner 
+      :size='50' 
+      color="rgb(255, 255, 255)" 
+      type="triple-bounce"></mt-spinner>
     </div>
   </div>
 </template>
