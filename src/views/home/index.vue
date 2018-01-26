@@ -67,8 +67,7 @@
 .li-left_bottom {
   // display: flex;
   p {
-    float: right;
-    // margin-right: .3rem;
+    float: right; // margin-right: .3rem;
   }
 }
 
@@ -91,7 +90,7 @@
   border-radius: 5px;
   max-width: 188px;
   overflow: hidden;
-  text-overflow:ellipsis;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
@@ -106,6 +105,17 @@
   font-size: 0.15rem;
   margin: 0 0.05rem;
 }
+
+.popup-class {
+  width: 100%;
+  padding-top: 8px;
+  border-top: 1px solid #ddd;
+  overflow: hidden;
+}
+
+.popup-btn {
+  float: right;
+}
 </style>
 <style lang='less'>
 .home {
@@ -114,10 +124,15 @@
   }
   .mint-popup {
     width: 75%;
+    padding-bottom: 5px;
   }
   .picker-selected {
     color: #26a2ff !important;
   }
+}
+
+.mint-toast.is-placetop {
+  z-index: 100000;
 }
 </style>
 
@@ -125,22 +140,13 @@
   <div class="home">
     <mt-swipe :auto="5500" class="home-lun">
       <mt-swipe-item>
-        <img 
-        @click='touchImg(1)' 
-        class="home-lun_img" 
-        src="../../assets/img/longbo.jpg" />
+        <img @click='touchImg(1)' class="home-lun_img" src="../../assets/img/longbo.jpg" />
       </mt-swipe-item>
       <mt-swipe-item>
-        <img 
-        @click='touchImg(2)' 
-        class="home-lun_img" 
-        src="../../assets/img/lunbo2.jpg" />
+        <img @click='touchImg(2)' class="home-lun_img" src="../../assets/img/lunbo2.jpg" />
       </mt-swipe-item>
       <mt-swipe-item>
-        <img 
-        @click='touchImg(3)' 
-        class="home-lun_img" 
-        src="../../assets/img/kuan.png" />
+        <img @click='touchImg(3)' class="home-lun_img" src="../../assets/img/kuan.png" />
       </mt-swipe-item>
     </mt-swipe>
     <div class="home-center">
@@ -155,33 +161,18 @@
       <div class="home-global">
         <div class="home-global_header">
           全局统计
-          <mt-button 
-          class="global-header_btn" 
-          size='small' 
-          type='primary' 
-          @click="screenList">筛选</mt-button>
+          <mt-button class="global-header_btn" size='small' type='primary' @click="screenList">筛选</mt-button>
         </div>
-        <Scroll 
-        :data='list' 
-        @scroll='scroll' 
-        @scrollEnd='scrollEnd' 
-        ref="homeScr" 
-        class="home-scroll">
-          <ul 
-          class="home-global_ul" 
-          @touchstart="touchDom($event, 'add')" 
-          @touchend="touchDom($event, 'rem')">
+        <Scroll :data='list' @scroll='scroll' @scrollEnd='scrollEnd' ref="homeScr" class="home-scroll">
+          <ul class="home-global_ul" @touchstart="touchDom($event, 'add')" @touchend="touchDom($event, 'rem')">
             <long-din :logdin='logdin'></long-din>
-            <li 
-            class="home-global_li" 
-            v-for="(item, index) in list" 
-            :key="item.id">
+            <li class="home-global_li" v-for="(item, index) in list" :key="item.id">
               <div class="global-li_left">
                 <span class="li-left_span">{{item.hostname}}</span>
                 <div class="li-left_bottom">
                   <span>gpu数{{item.gpus}}</span>
-                  <!-- <span class="li-left_btn" @click="clickMining(item.id, index)">星火</span> -->
-                   <span class="li-left_btn">{{item.proxypool1}}</span> 
+                  <span class="li-left_btn" @click="clickMining(item.id, index)">{{item.proxypool1}}</span>
+                  <!-- <span class="li-left_btn">{{item.proxypool1}}</span>  -->
                   <p>{{item.date}}</p>
                 </div>
               </div>
@@ -194,11 +185,16 @@
         <div class="home-null" v-if="!list.length">暂无矿机</div>
       </div>
     </div>
-    <mt-popup 
-    v-model="popupVisible" 
-    position="center" 
-    popup-transition="popup-fade">
-      <mt-picker :slots="slots" @change="onValuesChange"></mt-picker>
+    <mt-popup v-model="popupVisible" position="center" popup-transition="popup-fade">
+      <div>
+        <mt-picker :slots="slots" value-key='name' @change="onValuesChange"></mt-picker>
+        <div class="popup-class">
+          <div class="popup-btn">
+            <mt-button type="primary" @click="enter" size="small">确定</mt-button>
+            <mt-button size="small" @click="cancel">取消</mt-button>
+          </div>
+        </div>
+      </div>
     </mt-popup>
   </div>
 </template>
@@ -213,6 +209,10 @@ export default {
     return {
       id: '',
       index: 0,
+      miningValue: {
+        name: '',
+        value: ''
+      },
       logdin: false,
       popupVisible: false,
       gpuNub: 0,
@@ -220,11 +220,39 @@ export default {
       slots: [
         {
           flex: 1,
-          values: ['双优', '鱼池', '星火[广州]', '星火[华北]', '星火[华南]', '鱼池2'],
+          values: [
+            {
+              name: '双优',
+              value: 'eth.uupool.cn:8008'
+            },
+            {
+              name: '币网',
+              value: 'ether.bw.com:8008'
+            },
+            {
+              name: '鱼池',
+              value: 'eth.f2pool.com:8008'
+            },
+            {
+              name: '星火[广东]',
+              value: 'guangdong-pool.ethfans.org:3333'
+            },
+            {
+              name: '星火[华北]',
+              value: 'huabei-pool.ethfans.org:3333'
+            }
+          ],
           className: 'slot1',
           textAlign: 'right'
         }
       ],
+      dataKey: {
+        '双优': 'eth.uupool.cn:8008',
+        '币网': 'ether.bw.com:8008',
+        '鱼池': 'eth.f2pool.com:8008',
+        '星火[广东]': 'guangdong-pool.ethfans.org:3333',
+        '星火[华北]': 'huabei-pool.ethfans.org:3333'
+      },
       list: []
     }
   },
@@ -232,14 +260,39 @@ export default {
     this.getData()
   },
   methods: {
+    cancel () {
+      this.popupVisible = false
+    },
+    enter () {
+      let data = {
+        id: this.id,
+        proxypool1: this.miningValue.value
+      }
+      this.compileMining(data).then(res => {
+        if (res.code === '200' || res.code === 200) {
+          this.$toast({
+            message: '修改成功',
+            position: 'top',
+            duration: 5000
+          })
+          this.list[this.index]['proxypool1'] = this.miningValue.name
+          this.popupVisible = false
+        }
+      })
+    },
     getData () {
       this.gpuNub = 0
       this.getList().then(data => {
         this.scollY = 0
         let code = +data.code
-        if (code === 200) {
+        if (code === 200 || code === '200') {
           this.list = data.data.map(v => {
             v.date = getDate()
+            for (let i in this.dataKey) {
+              if (v.proxypool1 === this.dataKey[i]) {
+                v.proxypool1 = i
+              }
+            }
             v.gpus = +v.gpus
             this.gpuNub += v.gpus
             return v
@@ -270,9 +323,7 @@ export default {
       this.popupVisible = true
     },
     onValuesChange (picker, value) {
-      // if (this.index || this.index === 0) {
-      //   this.list[this.index].mine = value[0]
-      // }
+      this.miningValue = value[0]
     },
     touchDom (dom, name) {
       touchDoms(dom, name)
@@ -288,7 +339,8 @@ export default {
       }
     },
     ...mapActions([
-      'getList'
+      'getList',
+      'compileMining'
     ])
   },
   components: {

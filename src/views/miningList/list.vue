@@ -19,6 +19,7 @@
 
 .home-ul_top {
   margin-top: 20px;
+  padding-bottom: 70px
 }
 .home-text {
   display: flex;
@@ -76,8 +77,8 @@
         </h3>
         <div class="home-text_bottom">
           <div>
-            <span>矿池:{{item.proxypool1}}</span>
-            <span>显卡:{{item.gpus}}个</span>
+            <span>矿池: {{item.proxypool1}}</span>
+            <span>显卡: {{item.gpus}}个</span>
           </div>
           <div>{{item.date}}</div>
         </div>

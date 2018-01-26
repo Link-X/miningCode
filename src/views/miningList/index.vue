@@ -8,6 +8,7 @@
   margin-top: 20px;
   padding-bottom: .75rem;
 }
+
 .home-scroll {
   position: absolute;
   top: 95px;
@@ -18,9 +19,11 @@
   transition: all .3s;
   overflow: hidden;
 }
+
 .home-scroll2 {
   top: 98px;
 }
+
 .home-li {
   display: flex;
   padding: .1rem .15rem;
@@ -93,10 +96,11 @@
     transform: rotate(360deg)
   }
 }
+
 .search {
-      position: absolute;
-    width: 100%;
-    top: 40px;
+  position: absolute;
+  width: 100%;
+  top: 40px;
 }
 </style>
 
@@ -110,18 +114,12 @@
     <Scroll :data='list' class="home-scroll" v-show="!serch">
       <MiningList :list='list' @screenList='screenList'></MiningList>
     </Scroll>
-    <div 
-    class="mining-list_refresh" 
-    :class="{'xuan': upajx === true}"
-    @click="upData">
+    <div class="mining-list_refresh" :class="{'xuan': upajx === true}" @click="upData">
       <i class="iconfont icon-shuaxin"></i>
     </div>
     <mt-search class="search" v-model="searchValue" v-show="serch">
       <mt-cell>
-        <MiningList 
-        :list='searchData' 
-        @screenList='screenList' 
-        :isSearch='true'></MiningList>
+        <MiningList :list='searchData' @screenList='screenList' :isSearch='true'></MiningList>
       </mt-cell>
     </mt-search>
   </div>
@@ -139,7 +137,14 @@ export default {
       list: [],
       searchData: [],
       searchValue: '',
-      upajx: false
+      upajx: false,
+      dataKey: {
+        '双优': 'eth.uupool.cn:8008',
+        '币网': 'ether.bw.com:8008',
+        '鱼池': 'eth.f2pool.com:8008',
+        '星火[广东]': 'guangdong-pool.ethfans.org:3333',
+        '星火[华北]': 'huabei-pool.ethfans.org:3333'
+      }
     }
   },
   components: {
@@ -165,6 +170,11 @@ export default {
         if (code === 200) {
           this.list = data.data.map(v => {
             v.date = getDate()
+            for (let i in this.dataKey) {
+              if (v.proxypool1 === this.dataKey[i]) {
+                v.proxypool1 = i
+              }
+            }
             v.gpus = +v.gpus
             return v
           })
@@ -177,7 +187,16 @@ export default {
         value: this.searchValue
       }).then(res => {
         if (res.code === '200') {
-          this.searchData = res.data
+          this.searchData = res.data.map(v => {
+            v.date = getDate()
+            for (let i in this.dataKey) {
+              if (v.proxypool1 === this.dataKey[i]) {
+                v.proxypool1 = i
+              }
+            }
+            v.gpus = +v.gpus
+            return v
+          })
         }
       })
     },
