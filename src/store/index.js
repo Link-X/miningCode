@@ -14,7 +14,7 @@ const store = new Vuex.Store({
   state: {
     isLogin: false,
     iphone: '',
-    newsNumber: 5,
+    newsNumber: 0,
     serch: false
   },
   modules: {

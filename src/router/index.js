@@ -11,6 +11,7 @@ const MineDetails = () => import(/* webpackChunkName: "detals" */ '@/views/mineD
 const Graph = () => import(/* webpackChunkName: "detals" */ '@/views/graph')
 const Setting = () => import(/* webpackChunkName: "detals" */ '@/views/setting')
 const MiningList = () => import(/* webpackChunkName: "detals" */ '@/views/miningList')
+const Article = () => import(/* webpackChunkName: "login" */ '@/views/article')
 Vue.use(Router)
 
 export default new Router({
@@ -29,7 +30,8 @@ export default new Router({
         { path: '/graph', name: 'graph', component: Graph },
         { path: '/setting', name: 'setting', component: Setting },
         { path: '/miningList', name: 'miningList', component: MiningList },
-        { path: '/FindKey', name: 'FindKey', component: FindKey }
+        { path: '/FindKey', name: 'FindKey', component: FindKey },
+        { path: '/article', name: 'article', component: Article }
       ]
     },
     {

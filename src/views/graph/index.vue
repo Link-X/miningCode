@@ -32,7 +32,7 @@
         <div id="myChart" :style="{width: '100%', height: '2.5rem'}">
         </div>
         <h3 class="graph-header">GPU温度图</h3>
-        <div id="myChart2" :style="{width: '100%', height: '3.5rem'}"></div>
+        <div id="myChart2" :style="{width: '100%', height: '4rem'}"></div>
       </div>
     </Scroll>
   </div>

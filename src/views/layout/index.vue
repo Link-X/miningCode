@@ -30,9 +30,17 @@
       <div slot="left" v-show="isBack">
         <mt-button icon="back" @click="back">返回</mt-button>
       </div>
-       <mt-button v-show="isShou" @click="search" icon="search" slot="right"></mt-button> 
+       <mt-button 
+       v-show="isShou" 
+       @click="search" 
+       icon="search" 
+       slot="right"></mt-button> 
     </mt-header>
-    <mt-tabbar :fixed='true' v-model="selected" class="layout-bar">
+    <mt-tabbar 
+     :fixed='true' 
+     v-show="!isBack" 
+     v-model="selected" 
+     class="layout-bar">
       <mt-tab-item 
       v-for="(item, index) in data" 
       :key="index" :id='item.router' 
@@ -43,7 +51,11 @@
         <i slot='icon' class="iconfont" :class="item.icon"></i>
         <div class="tabSpan">
           {{item.name}}
-          <mt-badge size="small" class="errorC" type="error" v-if="item.isBadge && newsNumber">{{newsNumber}}</mt-badge>
+          <mt-badge 
+          size="small" 
+          class="errorC" 
+          type="error" 
+          v-if="item.isBadge && newsNumber">{{newsNumber}}</mt-badge>
         </div>
       </mt-tab-item>
     </mt-tabbar>
@@ -119,7 +131,6 @@ export default {
     },
     search () {
       this.SET_SERCH(true)
-      console.log(this.serch)
     },
     touchDom (dom, name) {
       if (name === 'add') {

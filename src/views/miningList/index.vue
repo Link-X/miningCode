@@ -4,7 +4,8 @@
   width: 100%;
 }
 
-.hom-ul {
+.search-ul {
+  margin-top: 20px;
   padding-bottom: .75rem;
 }
 
@@ -18,9 +19,11 @@
   transition: all .3s;
   overflow: hidden;
 }
+
 .home-scroll2 {
   top: 98px;
 }
+
 .home-li {
   display: flex;
   padding: .1rem .15rem;
@@ -93,10 +96,11 @@
     transform: rotate(360deg)
   }
 }
+
 .search {
-      position: absolute;
-    width: 100%;
-    top: 40px;
+  position: absolute;
+  width: 100%;
+  top: 40px;
 }
 </style>
 
@@ -108,66 +112,14 @@
       <mt-tab-item id="2">异常矿机</mt-tab-item>
     </mt-navbar>
     <Scroll :data='list' class="home-scroll" v-show="!serch">
-      <ul class="hom-ul">
-        <li 
-        v-for="(item, index) in list" 
-        :key="item.id" 
-        class="home-li" 
-        :ref='item.id' 
-        @touchstart="touchDom(item.id, 'add')" 
-        @touchend="touchDom(item.id, 'rem')">
-          <div class="home-img">
-            <img src='../../assets/img/kuan.png' />
-          </div>
-          <div class="home-text">
-            <h3 class="list-title">
-              {{item.hostname}}
-              <mt-button class="list-header_btn" size='small' type='primary' @click="screenList(item.id)">查看详情</mt-button>
-            </h3>
-            <div class="home-text_bottom">
-              <div>
-                <span>矿池:{{item.proxypool1}}</span>
-                <span>显卡:{{item.gpus}}个</span>
-              </div>
-              <div>{{item.date}}</div>
-            </div>
-          </div>
-        </li>
-      </ul>
+      <MiningList :list='list' @screenList='screenList'></MiningList>
     </Scroll>
     <div class="mining-list_refresh" :class="{'xuan': upajx === true}" @click="upData">
       <i class="iconfont icon-shuaxin"></i>
     </div>
     <mt-search class="search" v-model="searchValue" v-show="serch">
       <mt-cell>
-        <Scroll :data='list' class="home-scroll home-scroll2" v-show="!serch">
-          <ul class="hom-ul">
-            <li 
-            v-for="(item, index) in searchData" 
-            :key="item.id" 
-            class="home-li" 
-            :ref='item.id' 
-            @touchstart="touchDom(item.id, 'add')" 
-            @touchend="touchDom(item.id, 'rem')">
-              <div class="home-img">
-                <img src='../../assets/img/kuan.png' />
-              </div>
-              <div class="home-text">
-                <h3 class="list-title">
-                  {{item.hostname}}
-                  <mt-button class="list-header_btn" size='small' type='primary' @click="screenList(item.id)">查看详情</mt-button>
-                </h3>
-                <div class="home-text_bottom">
-                  <div>
-                    <span>矿池:{{item.proxypool1}}</span>
-                    <span>显卡:{{item.gpus}}个</span>
-                  </div>
-                  <div>{{item.date}}</div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </Scroll>
+        <MiningList :list='searchData' @screenList='screenList' :isSearch='true'></MiningList>
       </mt-cell>
     </mt-search>
   </div>
@@ -175,7 +127,8 @@
 
 <script>
 import Scroll from '@/components/scroll.vue'
-import { addClass, remClass, getDate } from '@/utils/index'
+import MiningList from '@/views/miningList/list'
+import { getDate } from '@/utils/index'
 import { mapActions, mapGetters, mapMutations } from 'vuex'
 export default {
   data () {
@@ -184,11 +137,18 @@ export default {
       list: [],
       searchData: [],
       searchValue: '',
-      upajx: false
+      upajx: false,
+      dataKey: {
+        '双优': 'eth.uupool.cn:8008',
+        '币网': 'ether.bw.com:8008',
+        '鱼池': 'eth.f2pool.com:8008',
+        '星火[广东]': 'guangdong-pool.ethfans.org:3333',
+        '星火[华北]': 'huabei-pool.ethfans.org:3333'
+      }
     }
   },
   components: {
-    Scroll
+    Scroll, MiningList
   },
   created () {
     this.getData()
@@ -210,6 +170,11 @@ export default {
         if (code === 200) {
           this.list = data.data.map(v => {
             v.date = getDate()
+            for (let i in this.dataKey) {
+              if (v.proxypool1 === this.dataKey[i]) {
+                v.proxypool1 = i
+              }
+            }
             v.gpus = +v.gpus
             return v
           })
@@ -222,7 +187,16 @@ export default {
         value: this.searchValue
       }).then(res => {
         if (res.code === '200') {
-          this.searchData = res.data
+          this.searchData = res.data.map(v => {
+            v.date = getDate()
+            for (let i in this.dataKey) {
+              if (v.proxypool1 === this.dataKey[i]) {
+                v.proxypool1 = i
+              }
+            }
+            v.gpus = +v.gpus
+            return v
+          })
         }
       })
     },
@@ -245,13 +219,6 @@ export default {
     },
     upData () {
       this.getData()
-    },
-    touchDom (dom, name) {
-      if (name === 'add') {
-        addClass(this.$refs[dom][0], 'home-li_click')
-      } else {
-        remClass(this.$refs[dom][0], 'home-li_click')
-      }
     },
     ...mapActions([
       'getList'

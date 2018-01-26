@@ -58,8 +58,15 @@
 
 <template>
   <div class="home">
-    <Scroll :data='list' @scroll='scroll' @scrollEnd='scrollEnd' class="home-scroll">
-      <ul class="hom-ul" @touchstart="touchDom($event, 'add')" @touchend="touchDom($event, 'rem')">
+    <Scroll 
+    :data='list' 
+    @scroll='scroll' 
+    @scrollEnd='scrollEnd' 
+    class="home-scroll">
+      <ul 
+      class="hom-ul" 
+      @touchstart="touchDom($event, 'add')" 
+      @touchend="touchDom($event, 'rem')">
         <long-din :logdin='logdin'></long-din>
         <router-link tag='li' 
         :to="{path: '/anomalyDetals', 

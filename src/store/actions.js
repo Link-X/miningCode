@@ -52,5 +52,15 @@ export default {
         })
       }
     )
+  },
+  compileMining ({ commit, state }, data) {
+    return http.post('/home/miner/updProxypool1', qs.stringify(data)).then(res => res).catch(
+      () => {
+        Toast({
+          message: '请求错误',
+          position: 'top'
+        })
+      }
+    )
   }
 }

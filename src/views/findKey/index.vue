@@ -97,15 +97,26 @@
       <ul class="login-from_ul">
         <li class="login-from_userName">
           <i class="iconfont icon-mima"></i>
-          <input type="password" autocomplete='off' class="from-inp" v-model="from.pwd1" />
+          <input 
+          type="password" 
+          autocomplete='off' 
+          class="from-inp" 
+          v-model="from.pwd1" />
         </li>
         <li>
           <i class="iconfont icon-mima"></i>
-          <input type="password"  autocomplete='off' class="from-inp" v-model="from.pwd2" />
+          <input 
+          type="password"  
+          autocomplete='off' 
+          class="from-inp" 
+          v-model="from.pwd2" />
         </li>
       </ul>
     </div>
-    <mt-button class="login-from_submit" type="default" @click="submit">确定</mt-button>
+    <mt-button 
+    class="login-from_submit" 
+    type="default" 
+    @click="submit">确定</mt-button>
     <div class="login-close" @click="back">
       <i class="iconfont icon-closecircleoutline"></i>
     </div>
