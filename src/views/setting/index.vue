@@ -37,14 +37,19 @@
     line-height: 0.25rem;
   }
 }
+
+.imgFile {
+  background-color: transparent;
+}
 </style>
 
 <template>
   <div>
-    <div class="setting-zhan">
+    <div class="setting-zhan" @click="upImg">
       <span>头像</span>
       <div class="setting-img">
-        <img src="../../assets/img/toxian.jpg" />
+        <img src="../../assets/img/toxian.jpg" v-if="!imgSrc" />
+        <img :src="'http://47.91.249.184/Public/Upload/' + imgSrc" v-else />
       </div>
     </div>
     <div class="setting-btn">
@@ -62,6 +67,9 @@
     </div>
     <mt-actionsheet :actions="actions" v-model="sheetVisible">
     </mt-actionsheet>
+    <mt-actionsheet :actions="actions2" v-model="sheetVisible2">
+    </mt-actionsheet>
+    <input ref="files" id="files" type='file' class="imgFile" @change="upImgFile" style="display:none;">
   </div>
 </template>
 
@@ -72,17 +80,55 @@ export default {
   data () {
     return {
       sheetVisible: false,
+      sheetVisible2: false,
+      imgSrc: '',
+      def: '../../assets/img/toxian.jpg',
       actions: [{
         name: '确定',
         method () {
           logout()
         }
+      }],
+      actions2: [{
+        name: '更换头像',
+        method () {
+          document.getElementById('files').click()
+        }
       }]
     }
+  },
+  created () {
+    this.imgSrc = localStorage.getItem('imgSrc')
   },
   methods: {
     goBack () {
       this.sheetVisible = true
+    },
+    upImg () {
+      this.sheetVisible2 = true
+    },
+    upImgFile (e) {
+      if (e.target.files && e.target.files.length) {
+        const file = e.target.files[0]
+        let formData = new FormData()
+        formData.append('file', file)
+        formData.append('token', localStorage.getItem('token'))
+        let config = {
+          url: 'home/user/imguplod',
+          method: 'post',
+          data: formData,
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+        this.$http2(config).then(res => {
+          console.log(res)
+          if (res.code === 200 || '200') {
+            this.imgSrc = res.data.img
+            localStorage.setItem('imgSrc', res.data.img)
+          }
+        })
+      }
     }
   },
   computed: {

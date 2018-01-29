@@ -6,7 +6,8 @@
   justify-content: center;
   align-items: center;
   background-color: #EFEFEF;
-  background: url('../../assets/img/toxian.jpg') no-repeat center 50%;
+  background: url('../../assets/img/kuan.png') no-repeat center 50%;
+  background-color: yellow;
   background-size: cover;
   background-size: 100%;
   margin-bottom: 10px;
@@ -112,7 +113,8 @@
     <div class="account-top">
     </div>
     <div class="account-img">
-      <img src="../../assets/img/toxian.jpg" />
+      <img src="../../assets/img/toxian.jpg"  v-if="!imgSrc" />
+      <img v-else :src="'http://47.91.249.184/Public/Upload/' + imgSrc" alt="" />
     </div>
     <div class="account-center">
       <ul class="account-center_ul">
@@ -152,6 +154,14 @@
 <script>
 import { touchDoms } from '@/utils/index'
 export default {
+  data () {
+    return {
+      imgSrc: ''
+    }
+  },
+  created () {
+    this.imgSrc = localStorage.getItem('imgSrc')
+  },
   methods: {
     touchDom (dom, name) {
       touchDoms(dom, name)

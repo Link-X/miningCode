@@ -4,6 +4,7 @@ import Vue from 'vue'
 import store from './store'
 import router from './router'
 import MintUI from 'mint-ui'
+import { http2 } from './api/http'
 import 'mint-ui/lib/style.css'
 import './global.css'
 import App from './App'
@@ -12,6 +13,7 @@ import echarts from 'echarts'
 Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false
 Vue.use(MintUI)
+Vue.prototype.$http2 = http2
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

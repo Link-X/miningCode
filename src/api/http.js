@@ -10,6 +10,11 @@ const http = axios.create({
     'Content-Type': 'application/x-www-form-urlencoded'
   }
 })
+const http2 = axios.create({
+  timeout: 10000,
+  baseURL: 'http://47.91.249.184'
+})
+
 const token = axios.create({
   timeout: 10000,
   baseURL: 'http://47.91.249.184',
@@ -17,6 +22,18 @@ const token = axios.create({
     'Content-Type': 'application/x-www-form-urlencoded'
   }
 })
+
+export const reqResolve2 = config => {
+  // if (config.method === 'post') {
+    // const token = localStorage.getItem('token')
+    // let data = config.data
+    // config.data = qs.stringify({
+    //   token: token,
+    //   ...data
+    // })
+  // }
+  return config
+}
 
 export const reqResolve = config => {
   if (config.method === 'post') {
@@ -64,4 +81,6 @@ export const resReject = error => {
 http.interceptors.request.use(reqResolve, reqReject)
 http.interceptors.response.use(resResolve)
 
-export { http, token }
+http2.interceptors.request.use(reqResolve2, reqReject)
+http2.interceptors.response.use(resResolve)
+export { http, token, http2 }
