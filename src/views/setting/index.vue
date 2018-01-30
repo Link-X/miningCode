@@ -107,9 +107,29 @@ export default {
     upImg () {
       this.sheetVisible2 = true
     },
+    checPic (name) {
+      var rgx = '(.jpg|.png|.gif|.jpeg)$'
+      var re = new RegExp(rgx)
+      if (re.test(name.toLowerCase())) {
+        return true
+      } else {
+        return false
+      }
+    },
     upImgFile (e) {
       if (e.target.files && e.target.files.length) {
         const file = e.target.files[0]
+        let isImg = this.checPic(e.target.files[0].name)
+        if (!isImg) {
+          console.log(e.target.files[0].name)
+          this.$toast({
+            title: '暂只支持jpg、png、gif、jpeg后缀图片',
+            message: '暂只支持jpg、png、gif、jpeg后缀图片',
+            position: 'top',
+            iconClass: ''
+          })
+          return
+        }
         let formData = new FormData()
         formData.append('file', file)
         formData.append('token', localStorage.getItem('token'))
