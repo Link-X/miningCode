@@ -69,7 +69,7 @@
     </mt-actionsheet>
     <mt-actionsheet :actions="actions2" v-model="sheetVisible2">
     </mt-actionsheet>
-    <input ref="files" id="files" type='file' class="imgFile" @change="upImgFile" style="display:none;">
+    <input ref="files" id="files" type='file' class="imgFile" @change="upImgFile" accept="image/*" style="display:none;">
   </div>
 </template>
 

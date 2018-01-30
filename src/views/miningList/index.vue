@@ -117,7 +117,11 @@
     <div class="mining-list_refresh" :class="{'xuan': upajx === true}" @click="upData">
       <i class="iconfont icon-shuaxin"></i>
     </div>
-    <mt-search class="search" v-model="searchValue" v-show="serch">
+    <mt-search 
+    placeholder='请输入矿池地址、备注查询矿机' 
+    class="search" 
+    v-model="searchValue"
+    v-show="serch">
       <mt-cell>
         <MiningList :list='searchData' @screenList='screenList' :isSearch='true'></MiningList>
       </mt-cell>
