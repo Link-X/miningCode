@@ -94,11 +94,15 @@ export default {
       let num = 0
       this.getList().then(res => {
         if (res.code === '200') {
+          let hasNumber = 0
           res.data.forEach((v) => {
+            hasNumber += +v.hash
             if (+v.cpu_temp > 80 || +v.hash < 18) {
               num++
             }
           })
+          this.SET_LISTNUMBER(res.data.length)
+          this.SET_HASHNUMBER(hasNumber)
           this.SET_NEWSNUMBER(num)
         }
       })
@@ -130,7 +134,9 @@ export default {
     ]),
     ...mapMutations([
       'SET_SERCH',
-      'SET_NEWSNUMBER'
+      'SET_NEWSNUMBER',
+      'SET_LISTNUMBER',
+      'SET_HASHNUMBER'
     ])
   },
   computed: {

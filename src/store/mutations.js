@@ -15,5 +15,11 @@ export default {
   },
   SET_SERCH (state, data) {
     state.serch = data
+  },
+  SET_LISTNUMBER (state, data) {
+    state.listNumber = data
+  },
+  SET_HASHNUMBER (state, data) {
+    state.hashNumber = data
   }
 }
