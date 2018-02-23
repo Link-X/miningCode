@@ -6,7 +6,8 @@
   justify-content: center;
   align-items: center;
   background-color: #EFEFEF;
-  background: url('../../assets/img/toxian.jpg') no-repeat center 50%;
+  background: url('../../assets/img/kuan.png') no-repeat center 50%;
+  background-color: yellow;
   background-size: cover;
   background-size: 100%;
   margin-bottom: 10px;
@@ -43,18 +44,23 @@
 }
 
 .account-center_ul {
+  display: flex;
   li {
+    display: flex;
     width: 50%;
-    float: left;
+    justify-content: center;
+    flex-wrap: wrap;
     padding: .1rem 0;
     p {
+      width: 100%; 
       font-size: .18rem;
       text-align: center;
     }
     span {
-      display: block;
+      display: flex;
+      justify-content: center;
       font-weight: bold;
-      font-size: .6rem;
+      font-size: .45rem;
       color: #0d75e2;
       text-align: center;
     }
@@ -112,17 +118,18 @@
     <div class="account-top">
     </div>
     <div class="account-img">
-      <img src="../../assets/img/toxian.jpg" />
+      <img src="../../assets/img/toxian.jpg"  v-if="!imgSrc" />
+      <img v-else :src="'http://47.91.249.184/Public/Upload/' + imgSrc" alt="" />
     </div>
     <div class="account-center">
       <ul class="account-center_ul">
         <li>
           <p>我的矿机数量</p>
-          <span>13</span>
+           <span>{{listNumber}}</span> 
         </li>
         <li>
           <p>矿机总算力</p>
-          <span>13</span>
+           <span>{{hashNumber}}</span> 
         </li>
       </ul>
     </div>
@@ -151,11 +158,26 @@
 
 <script>
 import { touchDoms } from '@/utils/index'
+import { mapGetters } from 'vuex'
 export default {
+  data () {
+    return {
+      imgSrc: ''
+    }
+  },
+  created () {
+    this.imgSrc = localStorage.getItem('imgSrc')
+  },
   methods: {
     touchDom (dom, name) {
       touchDoms(dom, name)
     }
+  },
+  computed: {
+    ...mapGetters([
+      'hashNumber',
+      'listNumber'
+    ])
   }
 }
 </script>

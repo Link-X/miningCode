@@ -176,6 +176,8 @@ export default {
             })
             return
           }
+          // let imgUrl = `http://47.91.249.184/Public/Upload/${res.data.data.img}`
+          localStorage.setItem('imgSrc', res.data.data.img)
           this.SET_TOKEN_STORAGE(data.data.token)
           this.SET_IPHONE(this.from.username)
         })
