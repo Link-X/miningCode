@@ -246,13 +246,35 @@ export default {
           textAlign: 'right'
         }
       ],
-      dataKey: {
-        '双优': 'eth.uupool.cn:8008',
-        '币网': 'ether.bw.com:8008',
-        '鱼池': 'eth.f2pool.com:8008',
-        '星火[广东]': 'guangdong-pool.ethfans.org:3333',
-        '星火[华北]': 'huabei-pool.ethfans.org:3333'
-      },
+      dataKey: [
+        {
+          name: '双优',
+          key: 'eth.uupool.cn:8008'
+        },
+        {
+          name: '币网',
+          key: 'ether.bw.com:8008'
+        },
+        {
+          name: '鱼池',
+          key: 'eth.f2pool.com:8008'
+        },
+        {
+          name: '星火[广东]',
+          key: 'guangdong-pool.ethfans.org:3333'
+        },
+        {
+          name: '星火[华北]',
+          key: 'huabei-pool.ethfans.org:3333'
+        }
+      ],
+      // dataKey: {
+      //   '双优': 'eth.uupool.cn:8008',
+      //   '币网': 'ether.bw.com:8008',
+      //   '鱼池': 'eth.f2pool.com:8008',
+      //   '星火[广东]': 'guangdong-pool.ethfans.org:3333',
+      //   '星火[华北]': 'huabei-pool.ethfans.org:3333'
+      // },
       list: []
     }
   },
@@ -288,11 +310,16 @@ export default {
         if (code === 200 || code === '200') {
           this.list = data.data.map(v => {
             v.date = getDate()
-            for (let i in this.dataKey) {
-              if (v.proxypool1 === this.dataKey[i]) {
-                v.proxypool1 = i
+            this.dataKey.forEach(i => {
+              if (v.proxypool1 === i.name) {
+                v.proxypool1 = i.key
               }
-            }
+            })
+            // for (let i in this.dataKey) {
+            //   if (v.proxypool1 === this.dataKey[i]) {
+            //     v.proxypool1 = i
+            //   }
+            // }
             v.gpus = +v.gpus
             this.gpuNub += v.gpus
             return v

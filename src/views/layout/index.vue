@@ -152,10 +152,22 @@ export default {
       return resource.header[this.$route.name]
     },
     isBack () {
-      return this.headerTitle !== '首页' && this.headerTitle !== '异常消息' && this.headerTitle !== '我的'
+      const data = ['首页', '异常消息', '我的']
+      data.forEach(v => {
+        if (this.headerTitle !== v) {
+          return true
+        }
+        return false
+      })
     },
     isShou () {
-      return this.headerTitle === '矿机筛选'
+      const data = ['矿机筛选']
+      data.forEach(v => {
+        if (this.headerTitle !== v) {
+          return true
+        }
+        return false
+      })
     },
     ...mapGetters([
       'newsNumber',
